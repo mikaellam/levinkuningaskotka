@@ -39,3 +39,10 @@ Kuvat puuttuvat vielä. Siihen asti kuvapaikoissa näkyy tyylitelty tausta. Lis�
 ## Julkaisu
 
 Toimii sellaisenaan GitHub Pagesissa, Netlifyssä tai missä tahansa staattisessa hostingissa.
+
+## Taustan animaatiot
+
+- **Talvi:** revontulet
+- **Kesä:** keskiyön aurinko ja tupasvillat, elo–syyskuussa ruska ja putoavat lehdet
+
+Kesän taustaa voi esikatsella lisäämällä osoitteen perään `?taivas=aurinko` tai `?taivas=ruska` (valitse ylhäältä Kesä).

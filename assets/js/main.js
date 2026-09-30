@@ -347,7 +347,7 @@
     .catch(function () { kp = null; })
     .then(renderNow);
 
-  /* ---------- Taivas: revontulet (talvi) ja keskiyön aurinko (kesä) ---------- */
+  /* ---------- Taivas: revontulet (talvi), keskiyön aurinko tai ruska (kesä) ---------- */
   var canvas = document.getElementById("sky");
   var ctx = canvas.getContext("2d");
   var SCALE = 0.5; // piirretään puolella resoluutiolla: kevyempi ja luonnollinen pehmeys
@@ -363,6 +363,7 @@
     for (var i = 0; i < count; i++) {
       stars.push({ x: Math.random() * W, y: Math.random() * H * 0.75, r: Math.random() * 0.9 + 0.2, p: Math.random() * Math.PI * 2 });
     }
+    makeParticles();
     draw(performance.now());
   }
 
@@ -447,42 +448,210 @@
     ctx.globalAlpha = 1;
   }
 
-  function drawSummer(t) {
+  /* ---------- Kesätaivas: ruska (elo-syyskuu) tai keskiyön aurinko (muulloin) ----------
+     Esikatselu: lisää osoitteen perään ?taivas=ruska tai ?taivas=aurinko */
+  var summerSky = (function () {
+    var q = /[?&]taivas=(ruska|aurinko)/.exec(location.search);
+    if (q) return q[1] === "ruska" ? "ruska" : "midnight";
+    var m = new Date().getMonth(); // 7 = elokuu, 8 = syyskuu
+    return (m === 7 || m === 8) ? "ruska" : "midnight";
+  })();
+
+  // Satunnaisluvut, jotka pysyvät samoina koko sivun ajan (partikkelit piirretään ajasta laskien)
+  var seeds = [], leaves = [], ruskaPatches = [];
+  function makeParticles() {
+    seeds = []; leaves = []; ruskaPatches = [];
+    var i;
+    for (i = 0; i < 46; i++) {
+      seeds.push({ x0: Math.random() * W, y0: Math.random() * H, v: 3 + Math.random() * 6, drift: 2 + Math.random() * 5,
+        amp: 4 + Math.random() * 10, f: 0.2 + Math.random() * 0.5, ph: Math.random() * 6.28, r: 0.8 + Math.random() * 1.4 });
+    }
+    var cols = ["#b0643f", "#c99a4b", "#8e3b2e", "#d4a55a", "#a5482f"];
+    for (i = 0; i < 34; i++) {
+      leaves.push({ x0: Math.random() * W, y0: Math.random() * H, v: 6 + Math.random() * 9, drift: 3 + Math.random() * 6,
+        amp: 6 + Math.random() * 14, f: 0.3 + Math.random() * 0.6, ph: Math.random() * 6.28, spin: (Math.random() - 0.5) * 1.6,
+        size: 2.8 + Math.random() * 3, c: cols[i % cols.length] });
+    }
+    for (i = 0; i < 700; i++) {
+      var x = Math.random() * W;
+      var top = fellY(x);
+      var y = top + 4 + Math.pow(Math.random(), 0.8) * (H - top);
+      ruskaPatches.push({ x: x, y: y, rx: 2 + Math.random() * 6, ry: 1 + Math.random() * 2, c: cols[i % cols.length], a: 0.12 + Math.random() * 0.22 });
+    }
+    ruskaFell = null; // piirretään uudelleen seuraavalla kerralla
+  }
+
+  // Ruskan tunturi piirretään kerran erilliseen kuvaan ja sumennetaan pehmeäksi väripinnaksi
+  var ruskaFell = null;
+  function getRuskaFell() {
+    if (ruskaFell) return ruskaFell;
+    var c = document.createElement("canvas");
+    c.width = W; c.height = H;
+    var cx = c.getContext("2d");
+    var fg = cx.createLinearGradient(0, H * 0.6, 0, H);
+    fg.addColorStop(0, "#a8987c");
+    fg.addColorStop(0.25, "#a7714c");
+    fg.addColorStop(0.6, "#8f4a33");
+    fg.addColorStop(1, "#6f3a2a");
+    cx.beginPath();
+    cx.moveTo(0, H);
+    for (var x = 0; x <= W; x += 4) cx.lineTo(x, fellY(x));
+    cx.lineTo(W, H);
+    cx.closePath();
+    cx.fillStyle = fg;
+    cx.fill();
+    cx.save();
+    cx.clip();
+    cx.filter = "blur(2px)";
+    for (var i = 0; i < ruskaPatches.length; i++) {
+      var r = ruskaPatches[i];
+      cx.globalAlpha = r.a;
+      cx.fillStyle = r.c;
+      cx.beginPath();
+      cx.ellipse(r.x, r.y, r.rx, r.ry, 0, 0, Math.PI * 2);
+      cx.fill();
+    }
+    cx.restore();
+    ruskaFell = c;
+    return c;
+  }
+
+  function wrap(v, max) { return ((v % max) + max) % max; }
+
+  function drawMidnightSun(t) {
     var g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, "#dfe2e4");
-    g.addColorStop(0.55, "#f1efe0");
-    g.addColorStop(0.8, "#eadfc6");
+    g.addColorStop(0, "#d9dfe6");
+    g.addColorStop(0.45, "#efece0");
+    g.addColorStop(0.7, "#f3e4c6");
     g.addColorStop(1, "#f8f7ea");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
-    // Matalalla kiertävä aurinko
-    var sx = W * (0.72 + 0.1 * Math.sin(t * 0.05));
-    var sy = H * 0.6;
-    var sun = ctx.createRadialGradient(sx, sy, 0, sx, sy, H * 0.6);
-    sun.addColorStop(0, "rgba(250, 236, 205, 0.95)");
-    sun.addColorStop(0.08, "rgba(226, 204, 168, 0.7)");
-    sun.addColorStop(0.35, "rgba(206, 184, 150, 0.2)");
-    sun.addColorStop(1, "rgba(206, 184, 150, 0)");
-    ctx.fillStyle = sun;
+    // Aurinko kulkee horisontin suuntaisesti: matalimmillaan keskellä, mutta ei laske koskaan
+    var s = Math.sin(t * (2 * Math.PI / 200));
+    var sx = W * (0.6 + 0.3 * s);
+    var sy = H * (0.5 - 0.13 * s * s);
+    var R = Math.max(W, H);
+
+    // Valojuovat
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.translate(sx, sy);
+    ctx.rotate(t * 0.02);
+    var rays = 14;
+    for (var i = 0; i < rays; i++) {
+      var ang = (i / rays) * Math.PI * 2;
+      var width = 0.07 + 0.04 * Math.sin(i * 2.3);
+      var a = 0.028 + 0.022 * Math.sin(t * 0.5 + i * 1.7);
+      var rg = ctx.createRadialGradient(0, 0, 0, 0, 0, R * 0.9);
+      rg.addColorStop(0, "rgba(255, 238, 205," + a.toFixed(3) + ")");
+      rg.addColorStop(1, "rgba(255, 238, 205,0)");
+      ctx.fillStyle = rg;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, R * 0.9, ang - width, ang + width);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Hehku ja aurinkokiekko
+    var glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, H * 0.55);
+    glow.addColorStop(0, "rgba(255, 244, 222, 0.95)");
+    glow.addColorStop(0.06, "rgba(250, 226, 180, 0.75)");
+    glow.addColorStop(0.3, "rgba(226, 196, 150, 0.25)");
+    glow.addColorStop(1, "rgba(226, 196, 150, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+    ctx.beginPath();
+    ctx.arc(sx, sy, Math.max(3, H * 0.028), 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255, 250, 238, 0.95)";
+    ctx.fill();
+
+    drawFell("#a39479");
+    // Tunturin reuna hehkuu auringon puolelta
+    var rim = ctx.createLinearGradient(sx - W * 0.35, 0, sx + W * 0.35, 0);
+    rim.addColorStop(0, "rgba(255, 236, 200, 0)");
+    rim.addColorStop(0.5, "rgba(255, 236, 200, 0.8)");
+    rim.addColorStop(1, "rgba(255, 236, 200, 0)");
+    ctx.beginPath();
+    for (var fx = 0; fx <= W; fx += 4) { if (fx === 0) ctx.moveTo(fx, fellY(fx)); else ctx.lineTo(fx, fellY(fx)); }
+    ctx.strokeStyle = rim;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Tupasvillan haituvat nousevat valossa
+    for (var k = 0; k < seeds.length; k++) {
+      var p = seeds[k];
+      var y = H * 1.05 - wrap(p.y0 + p.v * t, H * 1.1);
+      var x = wrap(p.x0 + p.drift * t + p.amp * Math.sin(t * p.f + p.ph), W);
+      var d = Math.hypot(x - sx, y - sy) / R;
+      var shine = Math.max(0, 1 - d * 2.2);
+      var alpha = 0.45 + 0.35 * Math.sin(t * 1.4 + p.ph) + shine * 0.4;
+      var rr = p.r * (1 + shine);
+      var sg = ctx.createRadialGradient(x, y, 0, x, y, rr * 2.4);
+      sg.addColorStop(0, "rgba(255, 255, 250," + Math.min(1, alpha).toFixed(3) + ")");
+      sg.addColorStop(1, "rgba(255, 255, 250, 0)");
+      ctx.fillStyle = sg;
+      ctx.fillRect(x - rr * 2.4, y - rr * 2.4, rr * 4.8, rr * 4.8);
+    }
+  }
+
+  function drawRuska(t) {
+    var g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, "#dfe2e2");
+    g.addColorStop(0.5, "#efe9d9");
+    g.addColorStop(0.78, "#ecd8ba");
+    g.addColorStop(1, "#f8f7ea");
+    ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
-    // Ohuita pilvivanoja
-    for (var i = 0; i < 4; i++) {
-      var cy = H * (0.18 + i * 0.09);
-      var off = ((t * (6 + i * 3)) % (W * 1.6)) - W * 0.3;
-      var cg = ctx.createRadialGradient(off, cy, 0, off, cy, W * 0.35);
-      cg.addColorStop(0, "rgba(255,255,255,0.35)");
-      cg.addColorStop(1, "rgba(255,255,255,0)");
-      ctx.fillStyle = cg;
+    // Matala syysaurinko
+    var sx = W * (0.3 + 0.04 * Math.sin(t * 0.03));
+    var sy = H * 0.5;
+    var glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, H * 0.6);
+    glow.addColorStop(0, "rgba(255, 236, 205, 0.9)");
+    glow.addColorStop(0.08, "rgba(240, 206, 160, 0.55)");
+    glow.addColorStop(0.4, "rgba(220, 180, 130, 0.15)");
+    glow.addColorStop(1, "rgba(220, 180, 130, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    // Tunturi: paljas laki ylhäällä, ruskan värit rinteillä
+    ctx.drawImage(getRuskaFell(), 0, 0);
+    // Valo osuu tunturin reunaan
+    var rim = ctx.createLinearGradient(sx - W * 0.3, 0, sx + W * 0.5, 0);
+    rim.addColorStop(0, "rgba(255, 226, 180, 0)");
+    rim.addColorStop(0.4, "rgba(255, 226, 180, 0.7)");
+    rim.addColorStop(1, "rgba(255, 226, 180, 0)");
+    ctx.beginPath();
+    for (var fx = 0; fx <= W; fx += 4) { if (fx === 0) ctx.moveTo(fx, fellY(fx)); else ctx.lineTo(fx, fellY(fx)); }
+    ctx.strokeStyle = rim;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Putoavat lehdet: lepattavat ja kääntyilevät tuulessa
+    for (var k = 0; k < leaves.length; k++) {
+      var p = leaves[k];
+      var y = wrap(p.y0 + p.v * t, H * 1.1) - H * 0.05;
+      var x = wrap(p.x0 + p.drift * t + p.amp * Math.sin(t * p.f + p.ph), W);
       ctx.save();
-      ctx.translate(0, cy);
-      ctx.scale(1, 0.12);
-      ctx.translate(0, -cy);
-      ctx.fillRect(0, cy - W * 0.35, W, W * 0.7);
+      ctx.translate(x, y);
+      ctx.rotate(p.ph + t * p.spin);
+      ctx.scale(Math.max(0.15, Math.abs(Math.cos(t * p.f * 1.6 + p.ph))), 1);
+      ctx.fillStyle = p.c;
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
     }
-    drawFell("#a39479");
+    ctx.globalAlpha = 1;
+  }
+
+  function drawSummer(t) {
+    if (summerSky === "ruska") drawRuska(t);
+    else drawMidnightSun(t);
   }
 
   function draw(now) {
