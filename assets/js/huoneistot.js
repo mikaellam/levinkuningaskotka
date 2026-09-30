@@ -21,7 +21,7 @@ window.KOTKA_HUONEISTOT = [
     nimi: "B1",
     talo: "B",
     hlo: 8,
-    m2: null,
+    m2: 88,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: ["Sauna rinnenäkymällä"],
@@ -32,8 +32,8 @@ window.KOTKA_HUONEISTOT = [
   {
     nimi: "B3",
     talo: "B",
-    hlo: null,
-    m2: null,
+    hlo: 8,
+    m2: 88,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: ["Sauna rinnenäkymällä"],
@@ -44,7 +44,7 @@ window.KOTKA_HUONEISTOT = [
   {
     nimi: "B5",
     talo: "B",
-    hlo: null,
+    hlo: 7,
     m2: 75,
     kuvaus: "Tilava huoneisto toisessa kerroksessa, sisäänkäynti rakennuksen takaa.",
     kuvaus_en: "A spacious second-floor apartment with its entrance at the back of the building.",
@@ -70,64 +70,64 @@ window.KOTKA_HUONEISTOT = [
   {
     nimi: "E1",
     talo: "E",
-    hlo: null,
-    m2: null,
+    hlo: 8,
+    m2: 87,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e1.jpg",
-    airbnb: ""
+    airbnb: "https://www.airbnb.fi/rooms/1604302440559647241?source_impression_id=p3_1790765599_P309z9zrnuhCJ-Ac"
   },
   {
     nimi: "E2",
     talo: "E",
-    hlo: null,
-    m2: null,
+    hlo: 8,
+    m2: 87,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e2.jpg",
-    airbnb: ""
+    airbnb: "https://www.airbnb.fi/rooms/1604328782437279562?source_impression_id=p3_1790765597_P33fwBJIY2MSH8Ef"
   },
   {
     nimi: "E6",
     talo: "E",
-    hlo: null,
-    m2: null,
+    hlo: 8,
+    m2: 72,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e6.jpg",
-    airbnb: ""
+    airbnb: "https://www.airbnb.fi/rooms/1604368285423697215?source_impression_id=p3_1790765602_P3G09tkAWxtkHaDs"
   },
 
   /* ---------- D-talo ---------- */
   {
     nimi: "D1",
     talo: "D",
-    hlo: null,
-    m2: null,
+    hlo: 8,
+    m2: 87,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/d1.jpg",
-    airbnb: ""
+    airbnb: "https://www.airbnb.fi/rooms/1406394638866185784?source_impression_id=p3_1790765579_P3yZBce8qLUmZZKc"
   },
   {
     nimi: "D2",
     talo: "D",
-    hlo: null,
-    m2: null,
+    hlo: 8,
+    m2: 87,
     kuvaus: "",
     kuvaus_en: "",
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/d2.jpg",
-    airbnb: ""
+    airbnb: "https://www.airbnb.fi/rooms/1406394639787942314?source_impression_id=p3_1790765594_P3LUk2XzCkv7r30Z"
   }
 ];
 
