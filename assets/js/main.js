@@ -15,7 +15,7 @@
     root.dataset.season = season;
     try { localStorage.setItem("kotka-season", season); } catch (e) {}
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = season === "winter" ? "#0a0f15" : "#edf1ee";
+    if (meta) meta.content = season === "winter" ? "#000220" : "#f8f7ea";
     seasonListeners.forEach(function (fn) { fn(season); });
   }
 
@@ -319,16 +319,16 @@
 
   function drawWinter(t) {
     var g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, "#04070b");
-    g.addColorStop(0.6, "#0a141c");
-    g.addColorStop(1, "#0a0f15");
+    g.addColorStop(0, "#00010f");
+    g.addColorStop(0.6, "#01031f");
+    g.addColorStop(1, "#000220");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
       ctx.globalAlpha = 0.35 + 0.35 * Math.sin(t * 1.3 + s.p);
-      ctx.fillStyle = "#dfe9ff";
+      ctx.fillStyle = "#f8f7ea";
       ctx.fillRect(s.x, s.y, s.r, s.r);
     }
     ctx.globalAlpha = 1;
@@ -359,15 +359,15 @@
     }
     ctx.globalCompositeOperation = "source-over";
 
-    drawFell("#121d27");
+    drawFell("#070b33");
     // Lumen heijastus tunturin reunalla
     ctx.beginPath();
     for (var fx = 0; fx <= W; fx += 4) { if (fx === 0) ctx.moveTo(fx, fellY(fx)); else ctx.lineTo(fx, fellY(fx)); }
-    ctx.strokeStyle = "rgba(170, 220, 210, 0.18)";
+    ctx.strokeStyle = "rgba(248, 247, 234, 0.16)";
     ctx.lineWidth = 1;
     ctx.stroke();
     // Valaistut rinteet tunturin kyljessä
-    ctx.fillStyle = "rgba(255, 214, 150, 0.55)";
+    ctx.fillStyle = "rgba(232, 214, 180, 0.6)";
     for (var k = 0; k < 5; k++) {
       var sx = W * (0.5 + k * 0.035);
       for (var j = 0; j < 9; j++) {
@@ -383,10 +383,10 @@
 
   function drawSummer(t) {
     var g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, "#c9dde6");
-    g.addColorStop(0.55, "#e9e6d8");
-    g.addColorStop(0.8, "#f4dcb2");
-    g.addColorStop(1, "#edf1ee");
+    g.addColorStop(0, "#dfe2e4");
+    g.addColorStop(0.55, "#f1efe0");
+    g.addColorStop(0.8, "#eadfc6");
+    g.addColorStop(1, "#f8f7ea");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
@@ -394,10 +394,10 @@
     var sx = W * (0.72 + 0.1 * Math.sin(t * 0.05));
     var sy = H * 0.6;
     var sun = ctx.createRadialGradient(sx, sy, 0, sx, sy, H * 0.6);
-    sun.addColorStop(0, "rgba(255, 214, 140, 0.95)");
-    sun.addColorStop(0.08, "rgba(255, 200, 120, 0.7)");
-    sun.addColorStop(0.35, "rgba(255, 190, 120, 0.18)");
-    sun.addColorStop(1, "rgba(255, 190, 120, 0)");
+    sun.addColorStop(0, "rgba(250, 236, 205, 0.95)");
+    sun.addColorStop(0.08, "rgba(226, 204, 168, 0.7)");
+    sun.addColorStop(0.35, "rgba(206, 184, 150, 0.2)");
+    sun.addColorStop(1, "rgba(206, 184, 150, 0)");
     ctx.fillStyle = sun;
     ctx.fillRect(0, 0, W, H);
 
@@ -416,7 +416,7 @@
       ctx.fillRect(0, cy - W * 0.35, W, W * 0.7);
       ctx.restore();
     }
-    drawFell("#5f7568");
+    drawFell("#a39479");
   }
 
   function draw(now) {
