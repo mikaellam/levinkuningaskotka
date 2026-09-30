@@ -4,21 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Levin Kuningaskotka | Lomahuoneistot Levin keskustassa</title>
-  <meta name="description" content="15 lomahuoneistoa Levin keskustassa, noin 100 metrin päässä eturinteestä. Omat saunat, tilaa isollekin porukalle ja kaikki palvelut kävelymatkan päässä.">
+  <meta name="description" content="Lomahuoneistot Levin keskustassa, noin 100 metrin päässä eturinteestä. Tilaa isollekin porukalle ja kaikki palvelut kävelymatkan päässä.">
   <meta property="og:title" content="Levin Kuningaskotka">
-  <meta property="og:description" content="Lomahuoneistot Levin keskustassa, eturinne noin 100 metrin päässä.">
+  <meta property="og:description" content="Holiday apartments - right where you want to be.">
   <meta property="og:image" content="assets/img/hero.jpg">
   <meta name="theme-color" content="#000220">
   <script>
-    // Vuodenaika valitaan ennen piirtoa, ettei teema välähdä.
+    // Vuodenaika ja kieli valitaan ennen piirtoa, ettei sivu välähdä.
     (function () {
-      var s = null;
-      try { s = localStorage.getItem("kotka-season"); } catch (e) {}
+      var root = document.documentElement;
+      var s = null, l = null;
+      try { s = localStorage.getItem("kotka-season"); l = localStorage.getItem("kotka-lang"); } catch (e) {}
       if (s !== "winter" && s !== "summer") {
         var m = new Date().getMonth(); // 0 = tammikuu
         s = (m >= 9 || m <= 3) ? "winter" : "summer";
       }
-      document.documentElement.dataset.season = s;
+      if (l !== "fi" && l !== "en") {
+        l = /^fi\b/i.test(navigator.language || "fi") ? "fi" : "en";
+      }
+      root.dataset.season = s;
+      root.lang = l;
     })();
   </script>
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -28,26 +33,31 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <a class="skip" href="#huoneistot">Siirry huoneistoihin</a>
+  <!-- Tekstit molemmilla kielillä: assets/js/i18n.js (data-i18n-avaimet) -->
+  <a class="skip" href="#huoneistot" data-i18n="skip">Siirry huoneistoihin</a>
 
   <header class="nav" id="top">
     <div class="nav__inner">
-      <a class="brand" href="#top" aria-label="Levin Kuningaskotka, etusivu">
+      <a class="brand" href="#top" data-i18n-attr="aria-label:nav.home" aria-label="Levin Kuningaskotka, etusivu">
         <span class="brand__mark" aria-hidden="true">K</span>
         <span class="brand__text"><small>Levin</small>Kuningaskotka</span>
       </a>
-      <nav class="nav__links" aria-label="Päävalikko">
-        <a href="#huoneistot">Huoneistot</a>
-        <a href="#sijainti">Sijainti</a>
-        <a href="#palvelut">Palvelut</a>
+      <nav class="nav__links" data-i18n-attr="aria-label:nav.main" aria-label="Päävalikko">
+        <a href="#huoneistot" data-i18n="nav.apts">Huoneistot</a>
+        <a href="#sijainti" data-i18n="nav.loc">Sijainti</a>
+        <a href="#palvelut" data-i18n="nav.srv">Palvelut</a>
       </nav>
       <div class="nav__actions">
-        <button class="season" type="button" id="seasonToggle" aria-label="Vaihda vuodenaikaa">
-          <span class="season__opt" data-opt="winter"><i class="ph ph-snowflake" aria-hidden="true"></i><span>Talvi</span></span>
-          <span class="season__opt" data-opt="summer"><i class="ph ph-sun" aria-hidden="true"></i><span>Kesä</span></span>
+        <div class="lang" role="group" data-i18n-attr="aria-label:lang.label" aria-label="Kieli">
+          <button type="button" class="lang__opt" data-lang="fi" lang="fi" aria-pressed="true">FI</button>
+          <button type="button" class="lang__opt" data-lang="en" lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="season" type="button" id="seasonToggle" aria-label="Vaihda kesään">
+          <span class="season__opt" data-opt="winter"><i class="ph ph-snowflake" aria-hidden="true"></i><span data-i18n="season.winter">Talvi</span></span>
+          <span class="season__opt" data-opt="summer"><i class="ph ph-sun" aria-hidden="true"></i><span data-i18n="season.summer">Kesä</span></span>
           <span class="season__thumb" aria-hidden="true"></span>
         </button>
-        <a class="btn btn--primary btn--sm" href="#yhteys">Ota yhteyttä</a>
+        <a class="btn btn--primary btn--sm nav__cta" href="#yhteys" data-i18n="nav.contact">Ota yhteyttä</a>
       </div>
     </div>
   </header>
@@ -59,40 +69,40 @@
       <div class="hero__inner">
         <div class="hero__copy">
           <p class="hero__brand reveal">Levin Kuningaskotka</p>
-          <h1 class="hero__title reveal" id="hero-title">Rinteeseen on <em>sata metriä.</em></h1>
-          <p class="hero__lede reveal">15 lomahuoneistoa Levin keskustassa. Omat saunat, tilaa isollekin porukalle ja kaikki palvelut kävelymatkan päässä.</p>
+          <h1 class="hero__title reveal" id="hero-title" data-i18n-html="hero.title">Lomahuoneistot <em>juuri siellä, missä haluat olla.</em></h1>
+          <p class="hero__lede reveal" data-i18n="hero.lede">Levin keskustassa, noin 100 metrin päässä eturinteestä. Tilaa isollekin porukalle ja kaikki palvelut kävelymatkan päässä.</p>
           <div class="hero__ctas reveal">
-            <a class="btn btn--primary" href="#huoneistot">Katso huoneistot <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
-            <a class="btn btn--ghost" href="#yhteys">Ota yhteyttä</a>
+            <a class="btn btn--primary" href="#huoneistot"><span data-i18n="hero.cta">Katso huoneistot</span> <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+            <a class="btn btn--ghost" href="#yhteys" data-i18n="nav.contact">Ota yhteyttä</a>
           </div>
         </div>
         <figure class="hero__photo frame reveal">
           <!-- KUVA: assets/img/hero.jpg (pystykuva n. 1200x1500, esim. talo tai näkymä saunasta rinteeseen) -->
-          <img src="assets/img/hero.jpg" alt="Levin Kuningaskotka ja Levin eturinne" width="1200" height="1500" fetchpriority="high">
+          <img src="assets/img/hero.jpg" data-i18n-attr="alt:hero.photoAlt" alt="Levin Kuningaskotka ja Levin eturinne" width="1200" height="1500" fetchpriority="high">
           <i class="ph ph-mountains frame__icon" aria-hidden="true"></i>
         </figure>
       </div>
     </section>
 
     <!-- LEVI JUURI NYT: sää (Open-Meteo), revontuliaktiivisuus (NOAA) ja päivänvalo (lasketaan selaimessa) -->
-    <section class="now" aria-label="Levi juuri nyt">
+    <section class="now" data-i18n-attr="aria-label:now.title" aria-label="Levi juuri nyt">
       <div class="now__inner">
-        <h2 class="now__title">Levi juuri nyt</h2>
+        <h2 class="now__title" data-i18n="now.title">Levi juuri nyt</h2>
         <dl class="now__grid">
           <div class="now__item" id="nowTemp">
-            <dt><i class="ph ph-thermometer-simple" aria-hidden="true"></i> Lämpötila</dt>
+            <dt><i class="ph ph-thermometer-simple" aria-hidden="true"></i> <span data-i18n="now.temp">Lämpötila</span></dt>
             <dd><span class="now__value skeleton">&nbsp;</span><span class="now__note skeleton">&nbsp;</span></dd>
           </div>
           <div class="now__item" id="nowSnow">
-            <dt><i class="ph ph-snowflake" aria-hidden="true"></i> Lunta maassa</dt>
+            <dt><i class="ph ph-snowflake" aria-hidden="true"></i> <span data-i18n="now.snow">Lunta maassa</span></dt>
             <dd><span class="now__value skeleton">&nbsp;</span><span class="now__note skeleton">&nbsp;</span></dd>
           </div>
           <div class="now__item" id="nowAurora">
-            <dt><i class="ph ph-sparkle" aria-hidden="true"></i> Revontulet</dt>
+            <dt><i class="ph ph-sparkle" aria-hidden="true"></i> <span data-i18n="now.aurora">Revontulet</span></dt>
             <dd><span class="now__value skeleton">&nbsp;</span><span class="now__note skeleton">&nbsp;</span></dd>
           </div>
           <div class="now__item" id="nowDay">
-            <dt><i class="ph ph-sun" aria-hidden="true"></i> Päivänvaloa tänään</dt>
+            <dt><i class="ph ph-sun" aria-hidden="true"></i> <span data-i18n="now.day">Päivänvaloa tänään</span></dt>
             <dd><span class="now__value">&nbsp;</span><span class="now__note">&nbsp;</span></dd>
           </div>
         </dl>
@@ -103,10 +113,10 @@
     <section class="apartments" id="huoneistot" aria-labelledby="apt-title">
       <div class="apartments__inner">
         <aside class="sizer reveal" aria-labelledby="sizer-title">
-          <h2 class="section-title" id="apt-title">Huoneistot</h2>
-          <p class="sizer__intro" id="sizer-title">Montako teitä tulee? Ehdotamme sopivimman huoneiston tai yhdistelmän.</p>
-          <label class="sizer__label" for="groupSize">Ryhmän koko</label>
-          <div class="sizer__count"><output id="groupOut" for="groupSize">6</output><span>henkeä</span></div>
+          <h2 class="section-title" id="apt-title" data-i18n="apt.title">Huoneistot</h2>
+          <p class="sizer__intro" id="sizer-title" data-i18n="apt.intro">Montako teitä tulee? Ehdotamme sopivimman huoneiston tai yhdistelmän.</p>
+          <label class="sizer__label" for="groupSize" data-i18n="apt.size">Ryhmän koko</label>
+          <div class="sizer__count"><output id="groupOut" for="groupSize">6</output><span data-i18n="apt.unit">henkeä</span></div>
           <input class="sizer__range" type="range" id="groupSize" min="1" max="40" value="6" aria-describedby="sizerResult">
           <div class="sizer__result" id="sizerResult" aria-live="polite"></div>
         </aside>
@@ -120,16 +130,16 @@
     <section class="location" id="sijainti" aria-labelledby="loc-title">
       <div class="location__map">
         <!-- TARKISTA: kartan merkin koordinaatit (marker=lat,lon) -->
-        <iframe title="Levin Kuningaskotkan sijainti kartalla" loading="lazy"
+        <iframe data-i18n-attr="title:loc.map" title="Levin Kuningaskotkan sijainti kartalla" loading="lazy"
           src="https://www.openstreetmap.org/export/embed.html?bbox=24.7930%2C67.7995%2C24.8260%2C67.8100&amp;layer=mapnik&amp;marker=67.8047%2C24.8093"></iframe>
       </div>
       <div class="location__panel reveal">
-        <h2 class="section-title" id="loc-title">Keskellä kaikkea, silti rauhassa.</h2>
+        <h2 class="section-title" id="loc-title" data-i18n="loc.title">Keskellä kaikkea, silti rauhassa.</h2>
         <ol class="route">
-          <li><i class="ph ph-person-simple-ski" aria-hidden="true"></i><span class="route__what">Eturinne ja hissit</span><span class="route__dist">n. 100 m</span></li>
-          <li><i class="ph ph-storefront" aria-hidden="true"></i><span class="route__what">Kaupat ja ravintolat</span><span class="route__dist">kävellen</span></li>
-          <li><i class="ph ph-sneaker-move" aria-hidden="true"></i><span class="route__what">Latu- ja kelkkareitit</span><span class="route__dist">läheltä</span></li>
-          <li><i class="ph ph-airplane-tilt" aria-hidden="true"></i><span class="route__what">Kittilän lentoasema</span><span class="route__dist">n. 15 km</span></li>
+          <li><i class="ph ph-person-simple-ski" aria-hidden="true"></i><span class="route__what" data-i18n="loc.slope">Eturinne ja hissit</span><span class="route__dist" data-i18n="loc.slopeDist">n. 100 m</span></li>
+          <li><i class="ph ph-storefront" aria-hidden="true"></i><span class="route__what" data-i18n="loc.shops">Kaupat ja ravintolat</span><span class="route__dist" data-i18n="loc.shopsDist">kävellen</span></li>
+          <li><i class="ph ph-sneaker-move" aria-hidden="true"></i><span class="route__what" data-i18n="loc.trails">Latu- ja kelkkareitit</span><span class="route__dist" data-i18n="loc.trailsDist">läheltä</span></li>
+          <li><i class="ph ph-airplane-tilt" aria-hidden="true"></i><span class="route__what" data-i18n="loc.airport">Kittilän lentoasema</span><span class="route__dist" data-i18n="loc.airportDist">n. 15 km</span></li>
         </ol>
         <p class="location__addr"><i class="ph ph-map-pin" aria-hidden="true"></i> Hissitie / Ratsastajankuja, 99130 Sirkka</p>
       </div>
@@ -138,70 +148,65 @@
     <!-- PALVELUT: bento -->
     <section class="services" id="palvelut" aria-labelledby="srv-title">
       <div class="services__inner">
-        <h2 class="section-title reveal" id="srv-title">Kaikki tarpeellinen samassa pihapiirissä</h2>
+        <h2 class="section-title reveal" id="srv-title" data-i18n="srv.title">Kaikki tarpeellinen lähellä</h2>
         <div class="bento">
           <article class="tile tile--photo reveal">
             <div class="frame">
-              <!-- KUVA: assets/img/sauna.jpg (vaakakuva n. 1600x1000, sauna ja näkymä rinteeseen) -->
-              <img src="assets/img/sauna.jpg" alt="Huoneiston sauna, jonka ikkunasta näkyy rinne" loading="lazy" width="1600" height="1000">
+              <!-- KUVA: assets/img/sauna.jpg (vaakakuva n. 1600x1000, B-talon sauna ja näkymä rinteeseen) -->
+              <img src="assets/img/sauna.jpg" data-i18n-attr="alt:srv.saunaAlt" alt="Huoneiston sauna, jonka ikkunasta näkyy rinne" loading="lazy" width="1600" height="1000">
               <i class="ph ph-fire frame__icon" aria-hidden="true"></i>
             </div>
             <div class="tile__body">
-              <h3>Saunasta näkyy rinne</h3>
-              <p>Osassa huoneistoista löylyjen lomassa voi katsella valaistua eturinnettä.</p>
+              <h3 data-i18n="srv.saunaTitle">Saunasta näkyy rinne</h3>
+              <p data-i18n="srv.saunaText">B-talon huoneistojen saunoista voi katsella valaistua eturinnettä.</p>
             </div>
           </article>
           <article class="tile tile--aurora reveal">
             <i class="ph ph-person-simple-ski tile__icon" aria-hidden="true"></i>
-            <h3>Suksihuolto</h3>
-            <p>Oma huoltotila suksille ja laudoille.</p>
+            <h3 data-i18n="srv.skiTitle">Suksihuolto</h3>
+            <p data-i18n="srv.skiText">Huoltotila suksille ja laudoille, samassa talossa pyykinpesun kanssa.</p>
           </article>
           <article class="tile reveal">
             <i class="ph ph-barbell tile__icon" aria-hidden="true"></i>
-            <h3>Kuntosali</h3>
-            <p>Technogym-laitteet samassa rakennuksessa.</p>
+            <h3 data-i18n="srv.gymTitle">Kuntosali</h3>
+            <p data-i18n="srv.gymText">Fressi-kuntosali aivan vieressä.</p>
           </article>
           <article class="tile reveal">
             <i class="ph ph-washing-machine tile__icon" aria-hidden="true"></i>
-            <h3>Pyykinpesu</h3>
-            <p>Pesukone käytössä, kamat kuiviksi seuraavaan päivään.</p>
+            <h3 data-i18n="srv.laundryTitle">Pyykinpesu</h3>
+            <p data-i18n="srv.laundryText">Pesukone käytössä, kamat kuiviksi seuraavaan päivään.</p>
           </article>
           <article class="tile tile--accent reveal">
             <i class="ph ph-pizza tile__icon" aria-hidden="true"></i>
-            <h3>Pizzeria alakerrassa</h3>
-            <p>Rinnepäivän jälkeen ei tarvitse lähteä kauas.</p>
-          </article>
-          <article class="tile tile--wide reveal">
-            <i class="ph ph-wine tile__icon" aria-hidden="true"></i>
-            <h3>Viinikauppa ja matkamuistot</h3>
-            <p>Talon liiketiloista löytyy illan juomat ja tuliaiset kotiin.</p>
+            <h3 data-i18n="srv.pizzaTitle">Kotipizza vieressä</h3>
+            <p data-i18n="srv.pizzaText">Rinnepäivän jälkeen ei tarvitse lähteä kauas.</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- AKTIVITEETIT: sivun ainoa marquee -->
-    <section class="marquee" aria-label="Tekemistä Levillä ympäri vuoden">
+    <section class="marquee" data-i18n-attr="aria-label:act.label" aria-label="Tekemistä Levillä ympäri vuoden">
       <div class="marquee__track">
         <ul class="marquee__list">
-          <li>Laskettelu</li><li><i class="ph ph-snowflake" aria-hidden="true"></i></li>
-          <li>Murtomaahiihto</li><li><i class="ph ph-snowflake" aria-hidden="true"></i></li>
-          <li>Moottorikelkkailu</li><li><i class="ph ph-sparkle" aria-hidden="true"></i></li>
-          <li>Revontulet</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
-          <li>Ruska</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
-          <li>Keskiyön aurinko</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
-          <li>Golf</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
-          <li>Maastopyöräily</li><li><i class="ph ph-snowflake" aria-hidden="true"></i></li>
+          <li data-i18n="act.1">Laskettelu</li><li><i class="ph ph-snowflake" aria-hidden="true"></i></li>
+          <li data-i18n="act.2">Murtomaahiihto</li><li><i class="ph ph-snowflake" aria-hidden="true"></i></li>
+          <li data-i18n="act.3">Moottorikelkkailu</li><li><i class="ph ph-sparkle" aria-hidden="true"></i></li>
+          <li data-i18n="act.4">Revontulet</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
+          <li data-i18n="act.5">Ruska</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
+          <li data-i18n="act.6">Keskiyön aurinko</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
+          <li data-i18n="act.7">Golf</li><li><i class="ph ph-sun" aria-hidden="true"></i></li>
+          <li data-i18n="act.8">Maastopyöräily</li><li><i class="ph ph-snowflake" aria-hidden="true"></i></li>
         </ul>
         <ul class="marquee__list" aria-hidden="true">
-          <li>Laskettelu</li><li><i class="ph ph-snowflake"></i></li>
-          <li>Murtomaahiihto</li><li><i class="ph ph-snowflake"></i></li>
-          <li>Moottorikelkkailu</li><li><i class="ph ph-sparkle"></i></li>
-          <li>Revontulet</li><li><i class="ph ph-sun"></i></li>
-          <li>Ruska</li><li><i class="ph ph-sun"></i></li>
-          <li>Keskiyön aurinko</li><li><i class="ph ph-sun"></i></li>
-          <li>Golf</li><li><i class="ph ph-sun"></i></li>
-          <li>Maastopyöräily</li><li><i class="ph ph-snowflake"></i></li>
+          <li data-i18n="act.1">Laskettelu</li><li><i class="ph ph-snowflake"></i></li>
+          <li data-i18n="act.2">Murtomaahiihto</li><li><i class="ph ph-snowflake"></i></li>
+          <li data-i18n="act.3">Moottorikelkkailu</li><li><i class="ph ph-sparkle"></i></li>
+          <li data-i18n="act.4">Revontulet</li><li><i class="ph ph-sun"></i></li>
+          <li data-i18n="act.5">Ruska</li><li><i class="ph ph-sun"></i></li>
+          <li data-i18n="act.6">Keskiyön aurinko</li><li><i class="ph ph-sun"></i></li>
+          <li data-i18n="act.7">Golf</li><li><i class="ph ph-sun"></i></li>
+          <li data-i18n="act.8">Maastopyöräily</li><li><i class="ph ph-snowflake"></i></li>
         </ul>
       </div>
     </section>
@@ -209,10 +214,10 @@
     <!-- YHTEYS -->
     <section class="contact" id="yhteys" aria-labelledby="contact-title">
       <div class="contact__inner reveal">
-        <h2 class="contact__title" id="contact-title">Tuletteko isolla porukalla?</h2>
-        <p class="contact__lede">Meillä on yli 120 vuodepaikkaa. Kysy ryhmävarauksista ja vapaista päivistä suoraan meiltä.</p>
+        <h2 class="contact__title" id="contact-title" data-i18n="contact.title">Tuletteko isolla porukalla?</h2>
+        <p class="contact__lede" data-i18n="contact.lede">Meillä on yhdeksän huoneistoa kolmessa talossa. Kysy ryhmävarauksista ja vapaista päivistä suoraan meiltä.</p>
         <div class="contact__links">
-          <a class="contact__link" href="mailto:levinkuningaskotka@gmail.com?subject=Kysely%20Levin%20Kuningaskotka">
+          <a class="contact__link" href="mailto:levinkuningaskotka@gmail.com?subject=Levin%20Kuningaskotka">
             <i class="ph ph-envelope-simple" aria-hidden="true"></i>
             <span>levinkuningaskotka@gmail.com</span>
             <i class="ph ph-arrow-up-right contact__arrow" aria-hidden="true"></i>
@@ -229,15 +234,17 @@
 
   <footer class="footer">
     <div class="footer__inner">
-      <a class="brand" href="#top">
+      <a class="brand" href="#top" data-i18n-attr="aria-label:nav.home" aria-label="Levin Kuningaskotka, etusivu">
         <span class="brand__mark" aria-hidden="true">K</span>
         <span class="brand__text"><small>Levin</small>Kuningaskotka</span>
       </a>
+      <p class="footer__slogan" lang="en">Holiday apartments - right where you want to be</p>
       <p>Hissitie / Ratsastajankuja, 99130 Sirkka</p>
-      <p class="footer__small">Säätiedot: Open-Meteo. Revontuliennuste: NOAA SWPC. Kartta: © OpenStreetMap-tekijät.</p>
+      <p class="footer__small" data-i18n="footer.credits">Säätiedot: Open-Meteo. Revontuliennuste: NOAA SWPC. Kartta: © OpenStreetMap-tekijät.</p>
     </div>
   </footer>
 
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/huoneistot.js"></script>
   <script src="assets/js/main.js" defer></script>
 </body>

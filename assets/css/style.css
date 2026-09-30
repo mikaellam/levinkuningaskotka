@@ -189,6 +189,19 @@ p { margin: 0; }
 .nav__links a:hover { color: var(--text); }
 .nav__actions { display: flex; align-items: center; gap: 12px; }
 
+/* Kielikytkin */
+.lang { display: inline-flex; align-items: center; gap: 2px; }
+.lang__opt {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  padding: 8px 8px; border-radius: var(--pill);
+  font: 600 0.8rem/1 var(--font-body); letter-spacing: 0.08em; color: var(--muted);
+  transition: color 0.2s;
+}
+.lang__opt + .lang__opt { position: relative; }
+.lang__opt + .lang__opt::before { content: ""; position: absolute; left: -1px; top: 25%; bottom: 25%; width: 1px; background: var(--line); }
+.lang__opt:hover { color: var(--text); }
+.lang__opt[aria-pressed="true"] { color: var(--accent-text); }
+
 /* Vuodenaikakytkin */
 .season {
   position: relative; display: inline-grid; grid-template-columns: 1fr 1fr;
@@ -223,18 +236,17 @@ p { margin: 0; }
 }
 .hero__inner {
   width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter);
-  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: clamp(32px, 5vw, 80px);
+  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); gap: clamp(32px, 5vw, 80px);
   align-items: end;
 }
 .hero__brand { font-weight: 500; color: var(--accent-text); margin-bottom: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.22em; }
 .hero__title {
-  font-size: clamp(3.4rem, 1.6rem + 7vw, 8rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.5rem, 1.2rem + 4vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
   font-weight: 500;
-  max-width: 12ch;
 }
-.hero__title em { font-style: italic; font-weight: 400; color: var(--accent-text); display: inline-block; padding-bottom: 0.08em; }
+.hero__title em { font-style: italic; font-weight: 400; color: var(--accent-text); display: block; padding-bottom: 0.08em; }
 .hero__lede { margin-top: 28px; max-width: 42ch; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem); color: var(--muted); }
 .hero__ctas { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
 .hero__photo { aspect-ratio: 4 / 5; box-shadow: var(--shadow); transform: rotate(1.5deg); margin: 0; }
@@ -311,6 +323,7 @@ p { margin: 0; }
 .apt__body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .apt__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .apt__name { font-size: 2.4rem; line-height: 1; font-weight: 500; font-variant-numeric: lining-nums; }
+.apt__building { margin-top: 6px; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .apt__facts { display: flex; gap: 14px; color: var(--muted); font-size: 0.9rem; }
 .apt__facts span { display: inline-flex; align-items: center; gap: 5px; }
 .apt__desc { color: var(--muted); font-size: 0.95rem; }
@@ -352,8 +365,7 @@ p { margin: 0; }
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas:
     "photo photo aurora gym"
-    "photo photo laundry pizza"
-    "wide wide wide pizza";
+    "photo photo laundry pizza";
 }
 .tile {
   position: relative; overflow: hidden;
@@ -370,7 +382,6 @@ p { margin: 0; }
 .bento .tile:nth-child(3) { grid-area: gym; }
 .bento .tile:nth-child(4) { grid-area: laundry; }
 .bento .tile:nth-child(5) { grid-area: pizza; }
-.bento .tile:nth-child(6) { grid-area: wide; }
 .tile--photo { padding: 0; min-height: 440px; }
 .tile--photo .frame { position: absolute; inset: 0; border-radius: 0; }
 .tile--photo .tile__body { position: relative; z-index: 2; padding: 28px; background: linear-gradient(to top, rgba(0, 2, 32, 0.85), transparent); color: var(--cream); }
@@ -379,10 +390,6 @@ p { margin: 0; }
 .tile--aurora { background: linear-gradient(160deg, color-mix(in srgb, var(--aurora-a) 38%, var(--surface)) 0%, var(--surface) 70%); }
 .tile--accent { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
 .tile--accent p, .tile--accent .tile__icon { color: color-mix(in srgb, var(--accent-ink) 78%, transparent); }
-.tile--wide { flex-direction: row; align-items: center; justify-content: flex-start; gap: 20px; min-height: 0; padding: 28px; }
-.tile--wide .tile__icon { position: static; font-size: 40px; }
-.tile--wide h3 { flex: 0 0 auto; }
-.tile--wide p { margin-left: auto; }
 
 /* ---------- Marquee ---------- */
 .marquee { border-block: 1px solid var(--line); padding: 28px 0; overflow: hidden; }
@@ -421,6 +428,7 @@ p { margin: 0; }
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--line); padding: 40px 0 48px; }
 .footer__inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; color: var(--muted); font-size: 0.9rem; }
+.footer__slogan { font: italic 400 1.35rem/1.2 var(--font-display); color: var(--text); }
 .footer__small { flex-basis: 100%; font-size: 0.8rem; }
 
 /* ---------- Ilmestymisanimaatiot ---------- */
@@ -460,7 +468,7 @@ p { margin: 0; }
   .sizer { position: static; }
   .bento {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas: "photo photo" "aurora gym" "laundry pizza" "wide wide";
+    grid-template-areas: "photo photo" "aurora gym" "laundry pizza";
   }
   .tile--photo { min-height: 380px; }
 }
@@ -481,9 +489,7 @@ p { margin: 0; }
   .location__map { position: relative; height: 320px; }
   .location__map::after { background: linear-gradient(to top, var(--bg), transparent 40%); }
   .location__panel { margin: 0 var(--gutter); width: auto; padding-top: 8px; }
-  .bento { grid-template-columns: 1fr; grid-template-areas: "photo" "aurora" "gym" "laundry" "pizza" "wide"; }
+  .bento { grid-template-columns: 1fr; grid-template-areas: "photo" "aurora" "gym" "laundry" "pizza"; }
   .tile { min-height: 170px; }
-  .tile--wide { flex-direction: column; align-items: flex-start; }
-  .tile--wide p { margin-left: 0; }
   .contact__links { grid-template-columns: 1fr; }
 }

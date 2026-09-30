@@ -9,6 +9,50 @@
   var LAT = 67.8047;
   var LON = 24.8093;
 
+  /* ---------- Kieli (FI / EN) ---------- */
+  var DICT = window.KOTKA_I18N || { fi: {}, en: {} };
+  var lang = root.lang === "en" ? "en" : "fi";
+  var langListeners = [];
+
+  function t(key, vars) {
+    var s = (DICT[lang] && DICT[lang][key]) || (DICT.fi && DICT.fi[key]) || key;
+    if (vars) {
+      Object.keys(vars).forEach(function (k) { s = s.split("{" + k + "}").join(vars[k]); });
+    }
+    return s;
+  }
+
+  function applyStaticTexts() {
+    document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
+    document.querySelectorAll("[data-i18n-attr]").forEach(function (el) {
+      // muoto: "attr:avain; attr2:avain2"
+      el.dataset.i18nAttr.split(";").forEach(function (pair) {
+        var p = pair.split(":");
+        if (p.length === 2) el.setAttribute(p[0].trim(), t(p[1].trim()));
+      });
+    });
+    document.title = t("meta.title");
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.content = t("meta.desc");
+    document.querySelectorAll(".lang__opt").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
+    });
+  }
+
+  function setLang(next) {
+    lang = next;
+    root.lang = next;
+    try { localStorage.setItem("kotka-lang", next); } catch (e) {}
+    applyStaticTexts();
+    langListeners.forEach(function (fn) { fn(); });
+  }
+
+  document.querySelectorAll(".lang__opt").forEach(function (b) {
+    b.addEventListener("click", function () { if (b.dataset.lang !== lang) setLang(b.dataset.lang); });
+  });
+  applyStaticTexts();
+
   /* ---------- Vuodenaika ---------- */
   var seasonListeners = [];
   function setSeason(season) {
@@ -21,10 +65,10 @@
 
   var toggle = document.getElementById("seasonToggle");
   function syncToggleLabel() {
-    var next = root.dataset.season === "winter" ? "kesään" : "talveen";
-    toggle.setAttribute("aria-label", "Vaihda " + next);
+    toggle.setAttribute("aria-label", t(root.dataset.season === "winter" ? "season.toSummer" : "season.toWinter"));
   }
   syncToggleLabel();
+  langListeners.push(syncToggleLabel);
   toggle.addEventListener("click", function (ev) {
     var next = root.dataset.season === "winter" ? "summer" : "winter";
     var r = toggle.getBoundingClientRect();
@@ -83,28 +127,37 @@
     return "mailto:" + email + "?subject=" + encodeURIComponent(subject);
   }
 
+  function localized(a, field) {
+    var en = a[field + "_en"];
+    if (lang === "en" && en && (!Array.isArray(en) || en.length)) return en;
+    return a[field];
+  }
+
   function renderApartments() {
     if (!apartments.length) {
-      grid.innerHTML = '<p class="apt__desc">Huoneistot päivittyvät pian. Kysy vapaita huoneistoja: <a href="' + mailto("Vapaat huoneistot") + '">' + esc(email) + "</a></p>";
+      grid.innerHTML = '<p class="apt__desc">' + esc(t("apt.empty")) + ' <a href="' + mailto(t("contact.subject")) + '">' + esc(email) + "</a></p>";
       return;
     }
     grid.innerHTML = apartments.map(function (a) {
       var facts = [];
-      if (a.hlo) facts.push('<span><i class="ph ph-users" aria-hidden="true"></i>' + a.hlo + " hlö</span>");
+      if (a.hlo) facts.push('<span><i class="ph ph-users" aria-hidden="true"></i>' + a.hlo + " " + esc(t("apt.guests")) + "</span>");
       if (a.m2) facts.push('<span><i class="ph ph-house-line" aria-hidden="true"></i>' + a.m2 + " m²</span>");
-      var tags = (a.ominaisuudet || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+      var tags = (localized(a, "ominaisuudet") || []).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+      var desc = localized(a, "kuvaus");
       var cta = a.airbnb
-        ? '<a class="btn btn--primary" href="' + esc(a.airbnb) + '" target="_blank" rel="noopener">Varaa Airbnb:ssä <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>'
-        : '<a class="btn btn--ghost" href="' + mailto("Huoneisto " + a.nimi) + '">Kysy vapaita päiviä</a>';
+        ? '<a class="btn btn--primary" href="' + esc(a.airbnb) + '" target="_blank" rel="noopener">' + esc(t("apt.book")) + ' <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>'
+        : '<a class="btn btn--ghost" href="' + mailto(t("apt.subject", { x: a.nimi })) + '">' + esc(t("apt.ask")) + "</a>";
       return (
         '<article class="apt" data-name="' + esc(a.nimi) + '">' +
           '<div class="frame">' +
-            (a.kuva ? '<img src="' + esc(a.kuva) + '" alt="Huoneisto ' + esc(a.nimi) + '" loading="lazy" width="1200" height="900">' : "") +
+            (a.kuva ? '<img src="' + esc(a.kuva) + '" alt="' + esc(t("apt.alt", { x: a.nimi })) + '" loading="lazy" width="1200" height="800">' : "") +
             '<i class="ph ph-bed frame__icon" aria-hidden="true"></i>' +
           "</div>" +
           '<div class="apt__body">' +
-            '<div class="apt__head"><h3 class="apt__name">' + esc(a.nimi) + '</h3><div class="apt__facts">' + facts.join("") + "</div></div>" +
-            (a.kuvaus ? '<p class="apt__desc">' + esc(a.kuvaus) + "</p>" : "") +
+            '<div class="apt__head"><div><h3 class="apt__name">' + esc(a.nimi) + "</h3>" +
+              (a.talo ? '<p class="apt__building">' + esc(t("apt.building", { x: a.talo })) + "</p>" : "") +
+            '</div><div class="apt__facts">' + facts.join("") + "</div></div>" +
+            (desc ? '<p class="apt__desc">' + esc(desc) + "</p>" : "") +
             (tags ? '<ul class="apt__tags">' + tags + "</ul>" : "") +
             '<div class="apt__cta">' + cta + "</div>" +
           "</div>" +
@@ -141,6 +194,10 @@
     return best;
   }
 
+  function contactLink(subject, label) {
+    return '<a class="text-link" href="' + mailto(subject) + '">' + esc(label) + ' <i class="ph ph-arrow-right" aria-hidden="true"></i></a>';
+  }
+
   function updateSizer() {
     var n = Number(range.value);
     out.textContent = n;
@@ -149,7 +206,7 @@
     cards.forEach(function (c) { c.classList.remove("is-match"); });
 
     if (!known.length) {
-      result.innerHTML = '<p>Kerro ryhmän koko, niin etsimme sopivat huoneistot.</p><a class="text-link" href="' + mailto("Ryhmävaraus, " + n + " henkeä") + '">Ota yhteyttä <i class="ph ph-arrow-right" aria-hidden="true"></i></a>';
+      result.innerHTML = "<p>" + t("sizer.noData") + "</p>" + contactLink(t("sizer.subject", { n: n }), t("nav.contact"));
       grid.classList.remove("is-filtering");
       return;
     }
@@ -157,9 +214,7 @@
     var combo = bestCombo(n);
     if (!combo) {
       grid.classList.remove("is-filtering");
-      result.innerHTML =
-        "<p><strong>" + n + " henkeä on iso porukka.</strong> Talossa on yhteensä yli 120 vuodepaikkaa, joten järjestämme majoituksen suoraan.</p>" +
-        '<a class="text-link" href="' + mailto("Ryhmävaraus, " + n + " henkeä") + '">Ota yhteyttä <i class="ph ph-arrow-right" aria-hidden="true"></i></a>';
+      result.innerHTML = "<p>" + t("sizer.big", { n: n }) + "</p>" + contactLink(t("sizer.subject", { n: n }), t("nav.contact"));
       return;
     }
 
@@ -169,15 +224,16 @@
 
     var chips = '<ul class="sizer__chips">' + names.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
     var lead = combo.picks.length === 1
-      ? "<p>Teille sopii <strong>yksi huoneisto</strong>, " + combo.beds + " vuodepaikkaa.</p>"
-      : "<p>Sopiva yhdistelmä: <strong>" + combo.picks.length + " huoneistoa</strong>, yhteensä " + combo.beds + " vuodepaikkaa.</p>";
+      ? "<p>" + t("sizer.one", { n: combo.beds }) + "</p>"
+      : "<p>" + t("sizer.many", { x: combo.picks.length, n: combo.beds }) + "</p>";
     var ask = combo.picks.length > 1
-      ? '<a class="text-link" href="' + mailto("Ryhmävaraus " + names.join(" + ") + ", " + n + " henkeä") + '">Kysy yhdistelmää <i class="ph ph-arrow-right" aria-hidden="true"></i></a>'
+      ? contactLink(t("sizer.subjectCombo", { x: names.join(" + "), n: n }), t("sizer.askCombo"))
       : "";
     result.innerHTML = lead + chips + ask;
   }
   range.addEventListener("input", updateSizer);
   updateSizer();
+  langListeners.push(function () { renderApartments(); updateSizer(); });
 
   /* ---------- Levi juuri nyt ---------- */
   function setNow(id, value, note, muted) {
@@ -208,41 +264,57 @@
   }
 
   var dayHours = daylightHours(new Date());
-  (function () {
-    var yesterday = daylightHours(new Date(Date.now() - 86400000));
+  var dayDiff = Math.round((dayHours - daylightHours(new Date(Date.now() - 86400000))) * 60);
+  // Haetut tiedot talteen, jotta ne voidaan piirtää uudelleen kielen vaihtuessa.
+  // undefined = haku kesken, null = haku epäonnistui
+  var weather, kp;
+
+  function renderNow() {
     if (dayHours >= 24) {
-      setNow("nowDay", "24 h", "Yötön yö, aurinko ei laske");
+      setNow("nowDay", "24 h", t("now.midnightSun"));
     } else if (dayHours <= 0) {
-      setNow("nowDay", "0 h", "Kaamos, aurinko ei nouse");
+      setNow("nowDay", "0 h", t("now.polarNight"));
     } else {
       var h = Math.floor(dayHours);
       var m = Math.round((dayHours - h) * 60);
       if (m === 60) { h += 1; m = 0; }
-      var diff = Math.round((dayHours - yesterday) * 60);
-      var note = diff === 0 ? "Sama kuin eilen" :
-        (diff > 0 ? diff + " min enemmän kuin eilen" : Math.abs(diff) + " min vähemmän kuin eilen");
+      var note = dayDiff === 0 ? t("now.sameAsYesterday") :
+        (dayDiff > 0 ? t("now.more", { n: dayDiff }) : t("now.less", { n: Math.abs(dayDiff) }));
       setNow("nowDay", h + " h " + m + " min", note);
     }
-  })();
 
-  var WEATHER = {
-    0: "Selkeää", 1: "Enimmäkseen selkeää", 2: "Puolipilvistä", 3: "Pilvistä",
-    45: "Sumua", 48: "Huurteista sumua",
-    51: "Heikkoa tihkua", 53: "Tihkusadetta", 55: "Runsasta tihkua",
-    56: "Jäätävää tihkua", 57: "Jäätävää tihkua",
-    61: "Heikkoa sadetta", 63: "Sadetta", 65: "Runsasta sadetta",
-    66: "Jäätävää sadetta", 67: "Jäätävää sadetta",
-    71: "Heikkoa lumisadetta", 73: "Lumisadetta", 75: "Runsasta lumisadetta", 77: "Lumijyväsiä",
-    80: "Sadekuuroja", 81: "Sadekuuroja", 82: "Rankkoja sadekuuroja",
-    85: "Lumikuuroja", 86: "Runsaita lumikuuroja",
-    95: "Ukkosta", 96: "Ukkosta", 99: "Ukkosta"
-  };
+    if (weather === null) {
+      setNow("nowTemp", t("now.tempNA"), "", true);
+      setNow("nowSnow", t("now.snowNA"), "", true);
+    } else if (weather) {
+      var temp = Math.round(weather.temperature_2m);
+      var feels = Math.round(weather.apparent_temperature);
+      var desc = t("weather")[weather.weather_code] || "";
+      setNow("nowTemp", (temp > 0 ? "+" : "") + temp + " °C",
+        desc + (isFinite(feels) && feels !== temp ? ", " + t("now.feels") + " " + (feels > 0 ? "+" : "") + feels + " °C" : ""));
+      var cm = Math.round((weather.snow_depth || 0) * 100);
+      setNow("nowSnow", cm + " cm", cm > 0 ? (cm >= 50 ? t("now.snowGood") : t("now.snowSome")) : t("now.snowNone"));
+    }
+
+    if (kp === null) {
+      setNow("nowAurora", t("now.auroraNA"), "", true);
+    } else if (kp !== undefined) {
+      var note2;
+      if (dayHours > 20) note2 = t("now.auroraBright");
+      else if (kp >= 4) note2 = t("now.auroraHigh");
+      else if (kp >= 2) note2 = t("now.auroraMid");
+      else note2 = t("now.auroraLow");
+      setNow("nowAurora", "Kp " + kp.toFixed(kp % 1 ? 1 : 0), note2);
+    }
+  }
+  renderNow();
+  langListeners.push(renderNow);
 
   function fetchJSON(url) {
     var ctrl = "AbortController" in window ? new AbortController() : null;
-    var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 8000) : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 8000) : null;
     return fetch(url, ctrl ? { signal: ctrl.signal } : {}).then(function (r) {
-      if (t) clearTimeout(t);
+      if (timer) clearTimeout(timer);
       if (!r.ok) throw new Error(r.status);
       return r.json();
     });
@@ -250,36 +322,18 @@
 
   fetchJSON("https://api.open-meteo.com/v1/forecast?latitude=" + LAT + "&longitude=" + LON +
     "&current=temperature_2m,apparent_temperature,weather_code,snow_depth&timezone=Europe%2FHelsinki")
-    .then(function (d) {
-      var c = d.current || {};
-      var temp = Math.round(c.temperature_2m);
-      var feels = Math.round(c.apparent_temperature);
-      var desc = WEATHER[c.weather_code] || "";
-      setNow("nowTemp", (temp > 0 ? "+" : "") + temp + " °C",
-        desc + (isFinite(feels) && feels !== temp ? ", tuntuu " + (feels > 0 ? "+" : "") + feels + " °C" : ""));
-      var cm = Math.round((c.snow_depth || 0) * 100);
-      setNow("nowSnow", cm + " cm", cm > 0 ? (cm >= 50 ? "Hyvät hiihtokelit" : "Lunta maassa") : "Ei lunta juuri nyt");
-    })
-    .catch(function () {
-      setNow("nowTemp", "Säätieto ei juuri nyt saatavilla", "", true);
-      setNow("nowSnow", "Lumitieto ei juuri nyt saatavilla", "", true);
-    });
+    .then(function (d) { weather = d.current || null; })
+    .catch(function () { weather = null; })
+    .then(renderNow);
 
   fetchJSON("https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json")
     .then(function (rows) {
       var last = rows[rows.length - 1];
-      var kp = Array.isArray(last) ? parseFloat(last[1]) : parseFloat(last.Kp != null ? last.Kp : last.kp_index);
-      if (!isFinite(kp)) throw new Error("kp");
-      var note;
-      if (dayHours > 20) note = "Liian valoisaa, revontulet näkyvät syys-huhtikuussa";
-      else if (kp >= 4) note = "Vahvaa aktiivisuutta, katso taivaalle";
-      else if (kp >= 2) note = "Hyvät mahdollisuudet pimeällä ja selkeällä";
-      else note = "Hiljaista, Levillä näkyy silti usein";
-      setNow("nowAurora", "Kp " + kp.toFixed(kp % 1 ? 1 : 0), note);
+      var v = Array.isArray(last) ? parseFloat(last[1]) : parseFloat(last.Kp != null ? last.Kp : last.kp_index);
+      kp = isFinite(v) ? v : null;
     })
-    .catch(function () {
-      setNow("nowAurora", "Ennuste ei juuri nyt saatavilla", "", true);
-    });
+    .catch(function () { kp = null; })
+    .then(renderNow);
 
   /* ---------- Taivas: revontulet (talvi) ja keskiyön aurinko (kesä) ---------- */
   var canvas = document.getElementById("sky");
