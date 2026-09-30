@@ -78,7 +78,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e1.jpg",
-    varaus: "https://www.airbnb.fi/rooms/1604302440559647241?source_impression_id=p3_1790765599_P309z9zrnuhCJ-Ac"
+    varaus: "https://book.hosta.fi/listings/478349?city=Levi&numberOfGuests=1"
   },
   {
     nimi: "E2",
@@ -90,7 +90,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e2.jpg",
-    varaus: "https://www.airbnb.fi/rooms/1604328782437279562?source_impression_id=p3_1790765597_P33fwBJIY2MSH8Ef"
+    varaus: "https://book.hosta.fi/listings/478364?city=Levi&numberOfGuests=1"
   },
   {
     nimi: "E6",
@@ -102,7 +102,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e6.jpg",
-    varaus: "https://www.airbnb.fi/rooms/1604368285423697215?source_impression_id=p3_1790765602_P3G09tkAWxtkHaDs"
+    varaus: "https://book.hosta.fi/listings/478807?city=Levi&numberOfGuests=1"
   },
 
   /* ---------- D-talo ---------- */
@@ -116,7 +116,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/d1.jpg",
-    varaus: "https://www.airbnb.fi/rooms/1406394638866185784?source_impression_id=p3_1790765579_P3yZBce8qLUmZZKc"
+    varaus: "https://book.hosta.fi/listings/383888?city=Levi&numberOfGuests=1"
   },
   {
     nimi: "D2",
@@ -128,7 +128,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/d2.jpg",
-    varaus: "https://www.airbnb.fi/rooms/1406394639787942314?source_impression_id=p3_1790765594_P3LUk2XzCkv7r30Z"
+    varaus: "https://book.hosta.fi/listings/383918?city=Levi&numberOfGuests=1"
   }
 ];
 
