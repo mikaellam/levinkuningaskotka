@@ -179,19 +179,28 @@
   var totalBeds = known.reduce(function (s, a) { return s + a.hlo; }, 0);
   range.max = String(Math.max(totalBeds + 4, 12));
 
-  // Pienin määrä huoneistoja, joihin ryhmä mahtuu; tasatilanteessa vähiten tyhjiä paikkoja.
+  // Ehdotusjärjestys taloittain (huoneistot.js: KOTKA_TALOJARJESTYS), esim. ["E", "D", "B"].
+  var houseOrder = window.KOTKA_TALOJARJESTYS || [];
+  function houseRank(a) {
+    var i = houseOrder.indexOf(a.talo);
+    return i === -1 ? houseOrder.length : i;
+  }
+
+  // Valinta: 1) pienin määrä huoneistoja, 2) talojärjestyksessä ensimmäiset talot,
+  // 3) vähiten tyhjiä paikkoja.
   function bestCombo(n) {
     var best = null;
     var count = known.length;
     for (var mask = 1; mask < (1 << count); mask++) {
-      var beds = 0, picks = [];
+      var beds = 0, rank = 0, picks = [];
       for (var i = 0; i < count; i++) {
-        if (mask & (1 << i)) { beds += known[i].hlo; picks.push(known[i]); }
+        if (mask & (1 << i)) { beds += known[i].hlo; rank += houseRank(known[i]); picks.push(known[i]); }
       }
       if (beds < n) continue;
       if (!best || picks.length < best.picks.length ||
-          (picks.length === best.picks.length && beds < best.beds)) {
-        best = { picks: picks, beds: beds };
+          (picks.length === best.picks.length && (rank < best.rank ||
+            (rank === best.rank && beds < best.beds)))) {
+        best = { picks: picks, beds: beds, rank: rank };
       }
     }
     return best;

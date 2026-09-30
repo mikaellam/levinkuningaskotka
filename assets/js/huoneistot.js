@@ -132,5 +132,8 @@ window.KOTKA_HUONEISTOT = [
   }
 ];
 
+// Ryhmäkokolaskurin ehdotusjärjestys: ensin E-talo, sitten D-talo, viimeisenä B-talo.
+window.KOTKA_TALOJARJESTYS = ["E", "D", "B"];
+
 // Yhteystiedot, joita varauspainike käyttää kun varauslinkkiä ei ole.
 window.KOTKA_SAHKOPOSTI = "levinkuningaskotka@gmail.com";
