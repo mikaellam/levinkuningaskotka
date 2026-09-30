@@ -144,8 +144,11 @@
       if (a.m2) facts.push('<span><i class="ph ph-house-line" aria-hidden="true"></i>' + a.m2 + " m²</span>");
       var tags = (localized(a, "ominaisuudet") || []).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
       var desc = localized(a, "kuvaus");
-      var cta = a.airbnb
-        ? '<a class="btn btn--primary" href="' + esc(a.airbnb) + '" target="_blank" rel="noopener">' + esc(t("apt.book")) + ' <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>'
+      // Varauslinkki: Airbnb-linkille oma teksti, muille (esim. Hosta) "Varaa suoraan".
+      var link = a.varaus || a.airbnb;
+      var bookLabel = /airbnb\./i.test(link || "") ? t("apt.bookAirbnb") : t("apt.bookDirect");
+      var cta = link
+        ? '<a class="btn btn--primary" href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(bookLabel) + ' <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>'
         : '<a class="btn btn--ghost" href="' + mailto(t("apt.subject", { x: a.nimi })) + '">' + esc(t("apt.ask")) + "</a>";
       return (
         '<article class="apt" data-name="' + esc(a.nimi) + '">' +

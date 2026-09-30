@@ -13,12 +13,12 @@ python3 -m http.server 8000
 
 | Mitä | Missä |
 |---|---|
-| Huoneistot, henkilömäärät, kuvaukset, **Airbnb-linkit** | `assets/js/huoneistot.js` |
+| Huoneistot, henkilömäärät, kuvaukset, **varauslinkit** | `assets/js/huoneistot.js` |
 | Sivun tekstit suomeksi ja englanniksi | `assets/js/i18n.js` |
 | Rakenne, yhteystiedot | `index.html` |
 | Värit ja tyylit | `assets/css/style.css` (tokenit tiedoston alussa) |
 
-Jos huoneistolla ei ole Airbnb-linkkiä, varauspainike avaa sähköpostin.
+Varauslinkin (`varaus`) napin teksti valitaan automaattisesti: Airbnb-linkissä "Varaa Airbnb:ssä", muissa (esim. Hosta) "Varaa suoraan". Jos linkkiä ei ole, painike avaa sähköpostin.
 
 Kielen voi vaihtaa ylhäältä (FI / EN). Oletuskieli tulee selaimen kielestä ja valinta muistetaan. Uusi teksti lisätään `i18n.js`:ään molemmille kielille ja siihen viitataan HTML:ssä `data-i18n="avain"`-attribuutilla.
 

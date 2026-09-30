@@ -11,9 +11,10 @@
  *   ominaisuudet     Lyhyitä nostoja suomeksi, näytetään kortissa
  *   ominaisuudet_en  Samat englanniksi, samassa järjestyksessä
  *   kuva             Kuvatiedosto, esim. "assets/img/huoneistot/b6.jpg" (vaakakuva n. 1200x800)
- *   airbnb           Linkki Airbnb-ilmoitukseen. Jos tyhjä, varauspainike avaa sähköpostin.
+ *   varaus           Varauslinkki (Hosta, Airbnb tms.). Airbnb-linkin napissa lukee "Varaa Airbnb:ssä",
+ *                    muissa "Varaa suoraan". Jos tyhjä, painike avaa sähköpostin ("Kysy vapaita päiviä").
  *
- * TARKISTA: täydennä puuttuvat henkilömäärät, kuvaukset ja Airbnb-linkit.
+ * TARKISTA: täydennä puuttuvat kuvaukset ja varauslinkit.
  */
 window.KOTKA_HUONEISTOT = [
   /* ---------- B-talo ---------- */
@@ -27,7 +28,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: ["Sauna rinnenäkymällä"],
     ominaisuudet_en: ["Sauna with slope view"],
     kuva: "assets/img/huoneistot/b1.jpg",
-    airbnb: ""
+    varaus: ""
   },
   {
     nimi: "B3",
@@ -39,7 +40,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: ["Sauna rinnenäkymällä"],
     ominaisuudet_en: ["Sauna with slope view"],
     kuva: "assets/img/huoneistot/b3.jpg",
-    airbnb: ""
+    varaus: ""
   },
   {
     nimi: "B5",
@@ -51,7 +52,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: ["Sauna rinnenäkymällä", "2. kerros"],
     ominaisuudet_en: ["Sauna with slope view", "2nd floor"],
     kuva: "assets/img/huoneistot/b5.jpg",
-    airbnb: ""
+    varaus: ""
   },
   {
     nimi: "B6",
@@ -63,7 +64,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: ["Sauna rinnenäkymällä", "Hyvin varusteltu keittiö"],
     ominaisuudet_en: ["Sauna with slope view", "Well-equipped kitchen"],
     kuva: "assets/img/huoneistot/b6.jpg",
-    airbnb: ""
+    varaus: ""
   },
 
   /* ---------- E-talo ---------- */
@@ -77,7 +78,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e1.jpg",
-    airbnb: "https://www.airbnb.fi/rooms/1604302440559647241?source_impression_id=p3_1790765599_P309z9zrnuhCJ-Ac"
+    varaus: "https://www.airbnb.fi/rooms/1604302440559647241?source_impression_id=p3_1790765599_P309z9zrnuhCJ-Ac"
   },
   {
     nimi: "E2",
@@ -89,7 +90,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e2.jpg",
-    airbnb: "https://www.airbnb.fi/rooms/1604328782437279562?source_impression_id=p3_1790765597_P33fwBJIY2MSH8Ef"
+    varaus: "https://www.airbnb.fi/rooms/1604328782437279562?source_impression_id=p3_1790765597_P33fwBJIY2MSH8Ef"
   },
   {
     nimi: "E6",
@@ -101,7 +102,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/e6.jpg",
-    airbnb: "https://www.airbnb.fi/rooms/1604368285423697215?source_impression_id=p3_1790765602_P3G09tkAWxtkHaDs"
+    varaus: "https://www.airbnb.fi/rooms/1604368285423697215?source_impression_id=p3_1790765602_P3G09tkAWxtkHaDs"
   },
 
   /* ---------- D-talo ---------- */
@@ -115,7 +116,7 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/d1.jpg",
-    airbnb: "https://www.airbnb.fi/rooms/1406394638866185784?source_impression_id=p3_1790765579_P3yZBce8qLUmZZKc"
+    varaus: "https://www.airbnb.fi/rooms/1406394638866185784?source_impression_id=p3_1790765579_P3yZBce8qLUmZZKc"
   },
   {
     nimi: "D2",
@@ -127,9 +128,9 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet: [],
     ominaisuudet_en: [],
     kuva: "assets/img/huoneistot/d2.jpg",
-    airbnb: "https://www.airbnb.fi/rooms/1406394639787942314?source_impression_id=p3_1790765594_P3LUk2XzCkv7r30Z"
+    varaus: "https://www.airbnb.fi/rooms/1406394639787942314?source_impression_id=p3_1790765594_P3LUk2XzCkv7r30Z"
   }
 ];
 
-// Yhteystiedot, joita varauspainike käyttää kun Airbnb-linkkiä ei ole.
+// Yhteystiedot, joita varauspainike käyttää kun varauslinkkiä ei ole.
 window.KOTKA_SAHKOPOSTI = "levinkuningaskotka@gmail.com";
