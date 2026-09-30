@@ -17,6 +17,70 @@
  * TARKISTA: täydennä puuttuvat kuvaukset ja varauslinkit.
  */
 window.KOTKA_HUONEISTOT = [
+  /* ---------- E-talo ---------- */
+  {
+    nimi: "E1",
+    talo: "E",
+    hlo: 8,
+    m2: 87,
+    kuvaus: "Kaksikerroksinen huoneisto, sisäänkäynti katutasosta. Yhdistettävissä väliovella E2:n kanssa, joten 16 hengen porukka mahtuu saman katon alle.",
+    kuvaus_en: "A two-storey apartment with a street-level entrance. Connects to E2 through an adjoining door, so a group of 16 can stay under one roof.",
+    ominaisuudet: ["2 kerrosta", "3 huonetta + alkovi", "2 WC:tä", "Yhdistettävissä E2:n kanssa"],
+    ominaisuudet_en: ["Two storeys", "3 rooms + alcove", "2 toilets", "Connects to E2"],
+    kuva: "assets/img/huoneistot/e1.jpg",
+    varaus: "https://book.hosta.fi/listings/478349?city=Levi&numberOfGuests=1"
+  },
+  {
+    nimi: "E2",
+    talo: "E",
+    hlo: 8,
+    m2: 87,
+    kuvaus: "Kaksikerroksinen huoneisto, sisäänkäynti katutasosta. Yhdistettävissä väliovella E1:n kanssa, joten 16 hengen porukka mahtuu saman katon alle.",
+    kuvaus_en: "A two-storey apartment with a street-level entrance. Connects to E1 through an adjoining door, so a group of 16 can stay under one roof.",
+    ominaisuudet: ["2 kerrosta", "3 huonetta + alkovi", "2 WC:tä", "Yhdistettävissä E1:n kanssa"],
+    ominaisuudet_en: ["Two storeys", "3 rooms + alcove", "2 toilets", "Connects to E1"],
+    kuva: "assets/img/huoneistot/e2.jpg",
+    varaus: "https://book.hosta.fi/listings/478364?city=Levi&numberOfGuests=1"
+  },
+  {
+    nimi: "E6",
+    talo: "E",
+    hlo: 8,
+    m2: 72,
+    kuvaus: "Neljä erillistä makuuhuonetta, sisäänkäynti toisesta kerroksesta.",
+    kuvaus_en: "Four separate bedrooms, with the entrance on the second floor.",
+    ominaisuudet: ["4 makuuhuonetta", "Sisäänkäynti 2. kerroksesta"],
+    ominaisuudet_en: ["4 bedrooms", "Entrance on 2nd floor"],
+    kuva: "assets/img/huoneistot/e6.jpg",
+    varaus: "https://book.hosta.fi/listings/478807?city=Levi&numberOfGuests=1"
+  },
+
+  /* ---------- D-talo ---------- */
+  {
+    nimi: "D1",
+    talo: "D",
+    hlo: 8,
+    m2: 87,
+    kuvaus: "Kaksikerroksinen huoneisto, sisäänkäynti katutasosta. Yhdistettävissä väliovella D2:n kanssa, joten 16 hengen porukka mahtuu saman katon alle.",
+    kuvaus_en: "A two-storey apartment with a street-level entrance. Connects to D2 through an adjoining door, so a group of 16 can stay under one roof.",
+    ominaisuudet: ["2 kerrosta", "3 huonetta + alkovi", "2 WC:tä", "Yhdistettävissä D2:n kanssa"],
+    ominaisuudet_en: ["Two storeys", "3 rooms + alcove", "2 toilets", "Connects to D2"],
+    kuva: "assets/img/huoneistot/d1.jpg",
+    varaus: "https://book.hosta.fi/listings/383888?city=Levi&numberOfGuests=1"
+  },
+  {
+    nimi: "D2",
+    talo: "D",
+    hlo: 8,
+    m2: 87,
+    kuvaus: "Kaksikerroksinen huoneisto, sisäänkäynti katutasosta. Yhdistettävissä väliovella D1:n kanssa, joten 16 hengen porukka mahtuu saman katon alle.",
+    kuvaus_en: "A two-storey apartment with a street-level entrance. Connects to D1 through an adjoining door, so a group of 16 can stay under one roof.",
+    ominaisuudet: ["2 kerrosta", "3 huonetta + alkovi", "2 WC:tä", "Yhdistettävissä D1:n kanssa"],
+    ominaisuudet_en: ["Two storeys", "3 rooms + alcove", "2 toilets", "Connects to D1"],
+    kuva: "assets/img/huoneistot/d2.jpg",
+    varaus: "https://book.hosta.fi/listings/383918?city=Levi&numberOfGuests=1"
+  },
+
   /* ---------- B-talo ---------- */
   {
     nimi: "B1",
@@ -65,70 +129,6 @@ window.KOTKA_HUONEISTOT = [
     ominaisuudet_en: ["Sauna with slope view", "Well-equipped kitchen"],
     kuva: "assets/img/huoneistot/b6.jpg",
     varaus: ""
-  },
-
-  /* ---------- E-talo ---------- */
-  {
-    nimi: "E1",
-    talo: "E",
-    hlo: 8,
-    m2: 87,
-    kuvaus: "",
-    kuvaus_en: "",
-    ominaisuudet: [],
-    ominaisuudet_en: [],
-    kuva: "assets/img/huoneistot/e1.jpg",
-    varaus: "https://book.hosta.fi/listings/478349?city=Levi&numberOfGuests=1"
-  },
-  {
-    nimi: "E2",
-    talo: "E",
-    hlo: 8,
-    m2: 87,
-    kuvaus: "",
-    kuvaus_en: "",
-    ominaisuudet: [],
-    ominaisuudet_en: [],
-    kuva: "assets/img/huoneistot/e2.jpg",
-    varaus: "https://book.hosta.fi/listings/478364?city=Levi&numberOfGuests=1"
-  },
-  {
-    nimi: "E6",
-    talo: "E",
-    hlo: 8,
-    m2: 72,
-    kuvaus: "",
-    kuvaus_en: "",
-    ominaisuudet: [],
-    ominaisuudet_en: [],
-    kuva: "assets/img/huoneistot/e6.jpg",
-    varaus: "https://book.hosta.fi/listings/478807?city=Levi&numberOfGuests=1"
-  },
-
-  /* ---------- D-talo ---------- */
-  {
-    nimi: "D1",
-    talo: "D",
-    hlo: 8,
-    m2: 87,
-    kuvaus: "",
-    kuvaus_en: "",
-    ominaisuudet: [],
-    ominaisuudet_en: [],
-    kuva: "assets/img/huoneistot/d1.jpg",
-    varaus: "https://book.hosta.fi/listings/383888?city=Levi&numberOfGuests=1"
-  },
-  {
-    nimi: "D2",
-    talo: "D",
-    hlo: 8,
-    m2: 87,
-    kuvaus: "",
-    kuvaus_en: "",
-    ominaisuudet: [],
-    ominaisuudet_en: [],
-    kuva: "assets/img/huoneistot/d2.jpg",
-    varaus: "https://book.hosta.fi/listings/383918?city=Levi&numberOfGuests=1"
   }
 ];
 
