@@ -9,6 +9,15 @@
   var LAT = 67.8047;
   var LON = 24.8093;
 
+  /* ---------- Kesätaivas: ruska (elo-syyskuu) tai keskiyön aurinko (muulloin) ----------
+     Esikatselu: lisää osoitteen perään ?taivas=ruska tai ?taivas=aurinko */
+  var summerSky = (function () {
+    var q = /[?&]taivas=(ruska|aurinko)/.exec(location.search);
+    if (q) return q[1] === "ruska" ? "ruska" : "midnight";
+    var m = new Date().getMonth(); // 7 = elokuu, 8 = syyskuu
+    return (m === 7 || m === 8) ? "ruska" : "midnight";
+  })();
+
   /* ---------- Kieli (FI / EN) ---------- */
   var DICT = window.KOTKA_I18N || { fi: {}, en: {} };
   var lang = root.lang === "en" ? "en" : "fi";
@@ -48,6 +57,15 @@
     langListeners.forEach(function (fn) { fn(); });
   }
 
+  // Elo-syyskuussa kesäpuolen kytkin näyttää ruskan
+  if (summerSky === "ruska") {
+    var summerOpt = document.querySelector('.season__opt[data-opt="summer"]');
+    if (summerOpt) {
+      summerOpt.querySelector(".ph").className = "ph ph-leaf";
+      summerOpt.querySelector("[data-i18n]").dataset.i18n = "season.autumn";
+    }
+  }
+
   document.querySelectorAll(".lang__opt").forEach(function (b) {
     b.addEventListener("click", function () { if (b.dataset.lang !== lang) setLang(b.dataset.lang); });
   });
@@ -65,7 +83,7 @@
 
   var toggle = document.getElementById("seasonToggle");
   function syncToggleLabel() {
-    toggle.setAttribute("aria-label", t(root.dataset.season === "winter" ? "season.toSummer" : "season.toWinter"));
+    toggle.setAttribute("aria-label", t(root.dataset.season === "winter" ? (summerSky === "ruska" ? "season.toAutumn" : "season.toSummer") : "season.toWinter"));
   }
   syncToggleLabel();
   langListeners.push(syncToggleLabel);
@@ -447,15 +465,6 @@
     }
     ctx.globalAlpha = 1;
   }
-
-  /* ---------- Kesätaivas: ruska (elo-syyskuu) tai keskiyön aurinko (muulloin) ----------
-     Esikatselu: lisää osoitteen perään ?taivas=ruska tai ?taivas=aurinko */
-  var summerSky = (function () {
-    var q = /[?&]taivas=(ruska|aurinko)/.exec(location.search);
-    if (q) return q[1] === "ruska" ? "ruska" : "midnight";
-    var m = new Date().getMonth(); // 7 = elokuu, 8 = syyskuu
-    return (m === 7 || m === 8) ? "ruska" : "midnight";
-  })();
 
   // Satunnaisluvut, jotka pysyvät samoina koko sivun ajan (partikkelit piirretään ajasta laskien)
   var seeds = [], leaves = [], ruskaPatches = [];

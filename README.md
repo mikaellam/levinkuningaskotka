@@ -43,6 +43,6 @@ Toimii sellaisenaan GitHub Pagesissa, Netlifyssä tai missä tahansa staattisess
 ## Taustan animaatiot
 
 - **Talvi:** revontulet
-- **Kesä:** keskiyön aurinko ja tupasvillat, elo–syyskuussa ruska ja putoavat lehdet
+- **Kesä:** keskiyön aurinko ja tupasvillat. Elo–syyskuussa kytkimessä lukee "Ruska" ja taustalla on ruska ja putoavat lehdet.
 
 Kesän taustaa voi esikatsella lisäämällä osoitteen perään `?taivas=aurinko` tai `?taivas=ruska` (valitse ylhäältä Kesä).

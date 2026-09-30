@@ -18,6 +18,8 @@ window.KOTKA_I18N = {
     "season.winter": "Talvi",
     "season.summer": "Kesä",
     "season.toSummer": "Vaihda kesään",
+    "season.autumn": "Ruska",
+    "season.toAutumn": "Vaihda ruskaan",
     "season.toWinter": "Vaihda talveen",
 
     "hero.title": "Lomahuoneistot <em>juuri siellä, missä haluat olla.</em>",
@@ -136,6 +138,8 @@ window.KOTKA_I18N = {
     "season.winter": "Winter",
     "season.summer": "Summer",
     "season.toSummer": "Switch to summer",
+    "season.autumn": "Autumn",
+    "season.toAutumn": "Switch to autumn",
     "season.toWinter": "Switch to winter",
 
     "hero.title": "Holiday apartments <em>right where you want to be.</em>",
