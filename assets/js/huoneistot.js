@@ -137,8 +137,8 @@ window.KOTKA_HUONEISTOT = [
 //  - ryhmälaskuri näyttää varausnapin, kun se ehdottaa juuri tätä yhdistelmää
 // Jos varaus on tyhjä, yhdistelmää ei näytetä.
 window.KOTKA_YHDISTELMAT = [
-  { nimet: ["E1", "E2"], hlo: 16, varaus: "" },
-  { nimet: ["D1", "D2"], hlo: 16, varaus: "" }
+  { nimet: ["E1", "E2"], hlo: 16, varaus: "https://book.hosta.fi/listings/478470?city=Levi&numberOfGuests=1" },
+  { nimet: ["D1", "D2"], hlo: 16, varaus: "https://book.hosta.fi/listings/384918?city=Levi&numberOfGuests=1" }
 ];
 
 // Ryhmäkokolaskurin ehdotusjärjestys: ensin E-talo, sitten D-talo, viimeisenä B-talo.
