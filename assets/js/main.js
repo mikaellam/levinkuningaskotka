@@ -151,6 +151,15 @@
     return a[field];
   }
 
+  // Yhdistelmät, joilla on oma varaussivu (huoneistot.js: KOTKA_YHDISTELMAT)
+  var combos = (window.KOTKA_YHDISTELMAT || []).filter(function (c) { return c.varaus && c.nimet && c.nimet.length > 1; });
+  function combosFor(name) {
+    return combos.filter(function (c) { return c.nimet.indexOf(name) !== -1; });
+  }
+  function bookLabelFor(link) {
+    return /airbnb\./i.test(link || "") ? t("apt.bookAirbnb") : t("apt.bookDirect");
+  }
+
   function renderApartments() {
     if (!apartments.length) {
       grid.innerHTML = '<p class="apt__desc">' + esc(t("apt.empty")) + ' <a href="' + mailto(t("contact.subject")) + '">' + esc(email) + "</a></p>";
@@ -164,10 +173,17 @@
       var desc = localized(a, "kuvaus");
       // Varauslinkki: Airbnb-linkille oma teksti, muille (esim. Hosta) "Varaa suoraan".
       var link = a.varaus || a.airbnb;
-      var bookLabel = /airbnb\./i.test(link || "") ? t("apt.bookAirbnb") : t("apt.bookDirect");
+      var bookLabel = bookLabelFor(link);
       var cta = link
         ? '<a class="btn btn--primary" href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(bookLabel) + ' <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>'
         : '<a class="btn btn--ghost" href="' + mailto(t("apt.subject", { x: a.nimi })) + '">' + esc(t("apt.ask")) + "</a>";
+      // Lisälinkki yhdistelmän varaussivulle, esim. "Varaa yhdessä E2:n kanssa (16 hlö)"
+      cta += combosFor(a.nimi).map(function (c) {
+        var others = c.nimet.filter(function (x) { return x !== a.nimi; }).join(" + ");
+        return '<a class="apt__combo" href="' + esc(c.varaus) + '" target="_blank" rel="noopener">' +
+          '<i class="ph ph-door-open" aria-hidden="true"></i><span>' + esc(t("apt.bookWith", { x: others, n: c.hlo })) + "</span>" +
+          '<i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>';
+      }).join("");
       return (
         '<article class="apt" data-name="' + esc(a.nimi) + '">' +
           '<div class="frame">' +
@@ -256,9 +272,25 @@
     var lead = combo.picks.length === 1
       ? "<p>" + t("sizer.one", { n: combo.beds }) + "</p>"
       : "<p>" + t("sizer.many", { x: combo.picks.length, n: combo.beds }) + "</p>";
-    var ask = combo.picks.length > 1
-      ? contactLink(t("sizer.subjectCombo", { x: names.join(" + "), n: n }), t("sizer.askCombo"))
-      : "";
+    // Jos ehdotukselle on suora varaussivu (yksi huoneisto tai valmis yhdistelmä), näytetään varausnappi
+    var bookLink = null;
+    if (combo.picks.length === 1) {
+      bookLink = combo.picks[0].varaus || combo.picks[0].airbnb || null;
+    } else {
+      combos.forEach(function (c) {
+        if (c.nimet.length === names.length && c.nimet.every(function (x) { return names.indexOf(x) !== -1; })) bookLink = c.varaus;
+      });
+    }
+    var ask;
+    if (bookLink) {
+      ask = '<a class="btn btn--primary btn--sm sizer__book" href="' + esc(bookLink) + '" target="_blank" rel="noopener">' +
+        esc(combo.picks.length > 1 ? t("sizer.bookCombo", { x: names.join(" + ") }) : bookLabelFor(bookLink)) +
+        ' <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>';
+    } else {
+      ask = combo.picks.length > 1
+        ? contactLink(t("sizer.subjectCombo", { x: names.join(" + "), n: n }), t("sizer.askCombo"))
+        : "";
+    }
     result.innerHTML = lead + chips + ask;
   }
   range.addEventListener("input", updateSizer);

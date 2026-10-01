@@ -331,6 +331,15 @@ p { margin: 0; }
 .apt__tags li { font-size: 0.8rem; padding: 4px 10px; border-radius: var(--pill); border: 1px solid var(--line); }
 .apt__cta { margin-top: auto; padding-top: 8px; }
 .apt__cta .btn { width: 100%; justify-content: center; }
+.apt__combo {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 10px; padding: 6px 0;
+  font-size: 0.88rem; font-weight: 600; color: var(--accent-text); text-decoration: none;
+}
+.apt__combo .ph-arrow-up-right { transition: transform 0.25s var(--ease); }
+.apt__combo:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.apt__combo:hover .ph-arrow-up-right { transform: translate(2px, -2px); }
+.sizer__book { margin-top: 6px; }
 
 /* Ryhmälaskurin korostus */
 .apt-grid.is-filtering .apt { opacity: 0.55; }

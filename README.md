@@ -20,6 +20,8 @@ python3 -m http.server 8000
 
 Varauslinkin (`varaus`) napin teksti valitaan automaattisesti: Airbnb-linkissä "Varaa Airbnb:ssä", muissa (esim. Hosta) "Varaa suoraan". Jos linkkiä ei ole, painike avaa sähköpostin.
 
+Yhdistelmille (E1 + E2, D1 + D2), joilla on oma varaussivu, linkki lisätään `huoneistot.js`:n lopussa olevaan `KOTKA_YHDISTELMAT`-listaan. Linkki näkyy silloin huoneistokorteissa ("Varaa yhdessä E2:n kanssa") ja ryhmälaskurissa.
+
 Kielen voi vaihtaa ylhäältä (FI / EN). Oletuskieli tulee selaimen kielestä ja valinta muistetaan. Uusi teksti lisätään `i18n.js`:ään molemmille kielille ja siihen viitataan HTML:ssä `data-i18n="avain"`-attribuutilla.
 
 ## Kuvat

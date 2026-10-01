@@ -57,6 +57,7 @@ window.KOTKA_I18N = {
     "apt.building": "{x}-talo",
     "apt.bookAirbnb": "Varaa Airbnb:ssä",
     "apt.bookDirect": "Varaa suoraan",
+    "apt.bookWith": "Varaa yhdessä {x}:n kanssa ({n} hlö)",
     "apt.ask": "Kysy vapaita päiviä",
     "apt.alt": "Huoneisto {x}",
     "apt.subject": "Huoneisto {x}",
@@ -67,6 +68,7 @@ window.KOTKA_I18N = {
     "sizer.many": "Sopiva yhdistelmä: <strong>{x} huoneistoa</strong>, yhteensä {n} vuodepaikkaa.",
     "sizer.big": "<strong>{n} henkeä on iso porukka.</strong> Järjestämme majoituksen useampaan huoneistoon, kysy suoraan meiltä.",
     "sizer.askCombo": "Kysy yhdistelmää",
+    "sizer.bookCombo": "Varaa {x} yhdessä",
     "sizer.subject": "Ryhmävaraus, {n} henkeä",
     "sizer.subjectCombo": "Ryhmävaraus {x}, {n} henkeä",
 
@@ -177,6 +179,7 @@ window.KOTKA_I18N = {
     "apt.building": "Building {x}",
     "apt.bookAirbnb": "Book on Airbnb",
     "apt.bookDirect": "Book direct",
+    "apt.bookWith": "Book together with {x} ({n} guests)",
     "apt.ask": "Check availability",
     "apt.alt": "Apartment {x}",
     "apt.subject": "Apartment {x}",
@@ -187,6 +190,7 @@ window.KOTKA_I18N = {
     "sizer.many": "A good combination: <strong>{x} apartments</strong>, {n} beds in total.",
     "sizer.big": "<strong>{n} guests is a big group.</strong> We can arrange several apartments for you, just ask us directly.",
     "sizer.askCombo": "Ask about this combination",
+    "sizer.bookCombo": "Book {x} together",
     "sizer.subject": "Group booking, {n} guests",
     "sizer.subjectCombo": "Group booking {x}, {n} guests",
 

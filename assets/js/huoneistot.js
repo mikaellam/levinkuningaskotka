@@ -132,6 +132,15 @@ window.KOTKA_HUONEISTOT = [
   }
 ];
 
+// Yhdistelmät, joilla on oma varaussivu. Kun linkki on lisätty:
+//  - E1/E2- ja D1/D2-korteissa näkyy "Varaa yhdessä ... (16 hlö)" -linkki
+//  - ryhmälaskuri näyttää varausnapin, kun se ehdottaa juuri tätä yhdistelmää
+// Jos varaus on tyhjä, yhdistelmää ei näytetä.
+window.KOTKA_YHDISTELMAT = [
+  { nimet: ["E1", "E2"], hlo: 16, varaus: "" },
+  { nimet: ["D1", "D2"], hlo: 16, varaus: "" }
+];
+
 // Ryhmäkokolaskurin ehdotusjärjestys: ensin E-talo, sitten D-talo, viimeisenä B-talo.
 window.KOTKA_TALOJARJESTYS = ["E", "D", "B"];
 
