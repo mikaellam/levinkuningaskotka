@@ -82,6 +82,7 @@ window.KOTKA_I18N = {
     "loc.trailsDist": "läheltä",
     "loc.airport": "Kittilän lentoasema",
     "loc.airportDist": "n. 15 km",
+    "loc.open": "Avaa kartalla",
 
     "srv.title": "Kaikki tarpeellinen lähellä",
     "srv.saunaTitle": "Saunasta näkyy rinne",
@@ -204,6 +205,7 @@ window.KOTKA_I18N = {
     "loc.trailsDist": "nearby",
     "loc.airport": "Kittilä Airport",
     "loc.airportDist": "approx. 15 km",
+    "loc.open": "Open in maps",
 
     "srv.title": "Everything you need, close by",
     "srv.saunaTitle": "Slope views from the sauna",

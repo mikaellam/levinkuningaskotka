@@ -28,7 +28,7 @@ Kielen voi vaihtaa ylhäältä (FI / EN). Oletuskieli tulee selaimen kielestä j
 
 Kuvat puuttuvat vielä. Siihen asti kuvapaikoissa näkyy tyylitelty tausta. Lisää nämä tiedostot:
 
-- `assets/img/hero.jpg`: pystykuva n. 1200x1500 (talo tai näkymä rinteeseen)
+- `assets/img/hero.jpg`: vaakakuva n. 1600x1200 (talo tai näkymä rinteeseen)
 - `assets/img/sauna.jpg`: vaakakuva n. 1600x1000
 - `assets/img/huoneistot/<tunnus>.jpg`: `b1.jpg`, `b3.jpg`, `b5.jpg`, `b6.jpg`, `e1.jpg`, `e2.jpg`, `e6.jpg`, `d1.jpg`, `d2.jpg` (vaakakuva n. 1200x800)
 
