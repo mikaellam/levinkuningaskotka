@@ -92,8 +92,8 @@ window.KOTKA_I18N = {
     "srv.skiText": "Huoltotila suksille ja laudoille, samassa talossa pyykinpesun kanssa.",
     "srv.gymTitle": "Kuntosali",
     "srv.gymText": "Fressi-kuntosali aivan vieressä.",
-    "srv.laundryTitle": "Pyykinpesu",
-    "srv.laundryText": "Pesukone vieraiden käytössä, kätevä pidemmällä lomalla.",
+    "srv.laundryTitle": "Pesu ja kuivaus",
+    "srv.laundryText": "Jokaisessa huoneistossa on kuivauskaappi, joten varusteet ovat aamulla kuivia. Pesukone löytyy suksihuollon yhteydestä.",
     "srv.pizzaTitle": "Kotipizza vieressä",
     "srv.pizzaText": "Rinnepäivän jälkeen ei tarvitse lähteä kauas.",
 
@@ -215,8 +215,8 @@ window.KOTKA_I18N = {
     "srv.skiText": "A maintenance room for skis and boards, in the same building as the laundry.",
     "srv.gymTitle": "Gym",
     "srv.gymText": "A Fressi gym right next door.",
-    "srv.laundryTitle": "Laundry",
-    "srv.laundryText": "A washing machine for guests, handy on a longer stay.",
+    "srv.laundryTitle": "Washing and drying",
+    "srv.laundryText": "Every apartment has a drying cabinet, so your gear is dry by morning. A washing machine is next to the ski room.",
     "srv.pizzaTitle": "Kotipizza next door",
     "srv.pizzaText": "No need to go far after a day on the slopes.",
 
