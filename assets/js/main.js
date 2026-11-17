@@ -6,8 +6,8 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   // Levin keskusta
-  var LAT = 67.8047;
-  var LON = 24.8093;
+  var LAT = 67.8056;
+  var LON = 24.8099;
 
   /* ---------- Kesätaivas: ruska (elo-syyskuu) tai keskiyön aurinko (muulloin) ----------
      Esikatselu: lisää osoitteen perään ?taivas=ruska tai ?taivas=aurinko */
