@@ -93,7 +93,7 @@ window.KOTKA_I18N = {
     "srv.gymTitle": "Kuntosali",
     "srv.gymText": "Fressi-kuntosali aivan vieressä.",
     "srv.laundryTitle": "Pyykinpesu",
-    "srv.laundryText": "Pesukone käytössä, kamat kuiviksi seuraavaan päivään.",
+    "srv.laundryText": "Pesukone vieraiden käytössä, kätevä pidemmällä lomalla.",
     "srv.pizzaTitle": "Kotipizza vieressä",
     "srv.pizzaText": "Rinnepäivän jälkeen ei tarvitse lähteä kauas.",
 
@@ -216,7 +216,7 @@ window.KOTKA_I18N = {
     "srv.gymTitle": "Gym",
     "srv.gymText": "A Fressi gym right next door.",
     "srv.laundryTitle": "Laundry",
-    "srv.laundryText": "Washing machine available, so your gear is dry for the next day.",
+    "srv.laundryText": "A washing machine for guests, handy on a longer stay.",
     "srv.pizzaTitle": "Kotipizza next door",
     "srv.pizzaText": "No need to go far after a day on the slopes.",
 
