@@ -25,7 +25,7 @@ window.KOTKA_I18N = {
     "hero.title": "Lomahuoneistot <em>juuri siellä, missä haluat olla.</em>",
     "hero.lede": "Levin keskustassa, noin 100 metrin päässä eturinteestä. Tilaa isollekin porukalle ja kaikki palvelut kävelymatkan päässä.",
     "hero.cta": "Katso huoneistot",
-    "hero.photoAlt": "Levin Kuningaskotka ja Levin eturinne",
+    "hero.photoAlt": "Levin keskusta ja eturinne talvella",
 
     "now.title": "Levi juuri nyt",
     "now.temp": "Lämpötila",
@@ -85,9 +85,9 @@ window.KOTKA_I18N = {
     "loc.open": "Avaa kartalla",
 
     "srv.title": "Kaikki tarpeellinen lähellä",
-    "srv.saunaTitle": "Saunasta näkyy rinne",
-    "srv.saunaText": "B-talon huoneistojen saunoista voi katsella valaistua eturinnettä.",
-    "srv.saunaAlt": "Huoneiston sauna, jonka ikkunasta näkyy rinne",
+    "srv.saunaTitle": "Oma sauna",
+    "srv.saunaText": "Jokaisessa huoneistossa on oma sauna, joten rinnepäivän jälkeen pääsee suoraan löylyihin.",
+    "srv.saunaAlt": "E-talon huoneiston sauna",
     "srv.skiTitle": "Suksihuolto",
     "srv.skiText": "Huoltotila suksille ja laudoille, samassa talossa pyykinpesun kanssa.",
     "srv.gymTitle": "Kuntosali",
@@ -148,7 +148,7 @@ window.KOTKA_I18N = {
     "hero.title": "Holiday apartments <em>right where you want to be.</em>",
     "hero.lede": "In the heart of Levi, about 100 metres from the front slopes. Room for bigger groups, with everything within walking distance.",
     "hero.cta": "View apartments",
-    "hero.photoAlt": "Levin Kuningaskotka and the Levi front slopes",
+    "hero.photoAlt": "Levi village centre and the front slopes in winter",
 
     "now.title": "Levi right now",
     "now.temp": "Temperature",
@@ -208,9 +208,9 @@ window.KOTKA_I18N = {
     "loc.open": "Open in maps",
 
     "srv.title": "Everything you need, close by",
-    "srv.saunaTitle": "Slope views from the sauna",
-    "srv.saunaText": "From the saunas of the B building apartments you can watch the floodlit front slopes.",
-    "srv.saunaAlt": "Apartment sauna with a view of the slopes",
+    "srv.saunaTitle": "Your own sauna",
+    "srv.saunaText": "Every apartment has its own sauna, so you can head straight to the steam after a day on the slopes.",
+    "srv.saunaAlt": "Sauna in a building E apartment",
     "srv.skiTitle": "Ski maintenance",
     "srv.skiText": "A maintenance room for skis and boards, in the same building as the laundry.",
     "srv.gymTitle": "Gym",
